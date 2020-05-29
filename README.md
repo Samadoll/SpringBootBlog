@@ -9,3 +9,5 @@ Lombok: build Entity using @Data
 To start sever, type in Terminal "mvn spring-boot:run"
 
 When running Server, after Edit html file, type in ANOTHER Terminal "mvn compile"
+
+To test API, use PostMan or http://localhost:8080/swagger-ui.html
