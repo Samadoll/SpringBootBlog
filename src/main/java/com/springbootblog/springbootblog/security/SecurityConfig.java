@@ -1,9 +1,7 @@
 package com.springbootblog.springbootblog.security;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.CachingUserDetailsService;
@@ -14,12 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserCache;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.cache.SpringCacheBasedUserCache;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.util.Assert;
-import java.lang.reflect.Constructor;
 import java.util.Objects;
 
 @Configuration
@@ -43,14 +38,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), cachingUserDetailsService(userDetailsService)))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), new CachingUserDetailsService(userDetailsService)))
                 // Make Stateless
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        CachingUserDetailsService cachingUserDetailsService = cachingUserDetailsService(userDetailsService);
+        CachingUserDetailsService cachingUserDetailsService = new CachingUserDetailsService(userDetailsService);
         UserCache userCache = new SpringCacheBasedUserCache(Objects.requireNonNull(cacheManager.getCache("jwt-cache")));
         cachingUserDetailsService.setUserCache(userCache);
         auth.eraseCredentials(false);
@@ -62,15 +57,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    private CachingUserDetailsService cachingUserDetailsService(UserDetailsServiceImpl delegate) {
-        Constructor<CachingUserDetailsService> constructor = null;
-        try {
-            constructor = CachingUserDetailsService.class.getDeclaredConstructor(UserDetailsService.class);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        Assert.notNull(constructor, "CachingUserDetailsService constructor is null");
-        constructor.setAccessible(true);
-        return BeanUtils.instantiateClass(constructor, delegate);
-    }
+//    private CachingUserDetailsService cachingUserDetailsService(UserDetailsServiceImpl delegate) {
+//        Constructor<CachingUserDetailsService> constructor = null;
+//        try {
+//            constructor = CachingUserDetailsService.class.getDeclaredConstructor(UserDetailsService.class);
+//        } catch (NoSuchMethodException e) {
+//            e.printStackTrace();
+//        }
+//        Assert.notNull(constructor, "CachingUserDetailsService constructor is null");
+//        constructor.setAccessible(true);
+//        return BeanUtils.instantiateClass(constructor, delegate);
+//    }
 }
