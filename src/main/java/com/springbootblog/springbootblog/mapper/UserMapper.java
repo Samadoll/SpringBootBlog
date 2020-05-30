@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 import org.springframework.stereotype.Repository;
 
-// Mapper for MyBatis
+// User Mapper for MyBatis
 @Mapper
 @Repository
 public interface UserMapper {
@@ -28,4 +28,7 @@ public interface UserMapper {
     @Select("SELECT * FROM `user` WHERE `username` = #{username}")
     @ResultMap("userMap")
     UserEntity findByUsername(@Param("username") String username);
+
+    @Update("UPDATE `user` SET `password` = #{password} WHERE `uid` = #{uid}")
+    void updatePassword(@Param("uid") int uid, @Param("password") String password);
 }
