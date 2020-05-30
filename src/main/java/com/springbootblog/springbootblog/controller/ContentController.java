@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/content")
+@RequestMapping("/api/content")
 @Validated
 public class ContentController {
 

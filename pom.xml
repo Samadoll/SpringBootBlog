@@ -19,7 +19,10 @@
     </properties>
 
     <dependencies>
-        <!--    Swagger Restful     -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency><!--    Swagger Restful     -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>

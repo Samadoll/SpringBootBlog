@@ -21,7 +21,7 @@ import java.util.Map;
 
 @RestController
 @IsUser
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
 
     private final String PAGE_SIZE = "10";

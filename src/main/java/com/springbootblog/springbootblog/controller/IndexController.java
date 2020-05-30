@@ -18,6 +18,7 @@ import java.util.Map;
 
 @RestController
 @Validated
+@RequestMapping("/api")
 public class IndexController {
 
     private final String PAGE_SIZE = "10";
