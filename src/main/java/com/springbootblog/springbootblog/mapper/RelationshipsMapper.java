@@ -13,8 +13,8 @@ public interface RelationshipsMapper {
     void createRelationship(@Param("cid") int cid, @Param("tid") int tid);
 
     @Select("SELECT `cid`, `relationships`.`tid`, `name` FROM `relationships` LEFT JOIN `tags` ON `relationships`.`tid` = `tags`.`tid` WHERE `cid` = #{cid}")
-    List<Map<String, Object>> findRelationshipsByCid(@Param("cid") int cid);
+    List<Map<String, Object>> findRelationshipsByContentId(@Param("cid") int cid);
 
     @Delete("DELETE FROM `relationships` WHERE cid = #{cid}")
-    void deleteRelationshipsByCid(@Param("cid") int cid);
+    void deleteRelationshipsByContentId(@Param("cid") int cid);
 }

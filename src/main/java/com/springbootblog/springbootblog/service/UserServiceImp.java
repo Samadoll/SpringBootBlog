@@ -2,7 +2,6 @@ package com.springbootblog.springbootblog.service;
 
 import com.springbootblog.springbootblog.entity.UserEntity;
 import com.springbootblog.springbootblog.mapper.UserMapper;
-import com.springbootblog.springbootblog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,5 +34,10 @@ public class UserServiceImp implements UserService {
         UserEntity userEntity = userMapper.findByUsernameAndPassword(username, password);
         Assert.notNull(userEntity, "Invalid Username Or Password");
         return userEntity;
+    }
+
+    @Override
+    public void updatePassword(int uid, String password) {
+        userMapper.updatePassword(uid, new BCryptPasswordEncoder().encode(password));
     }
 }

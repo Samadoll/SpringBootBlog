@@ -24,7 +24,7 @@ public interface ContentMapper {
             @Result(property = "createTime", column = "create_time", jdbcType = JdbcType.BIGINT)
     })
     @Select("SELECT * FROM `content` WHERE cid = #{cid}")
-    ContentEntity findContentByCid(@Param("cid") int cid);
+    ContentEntity findContentByContentId(@Param("cid") int cid);
 
     @Delete("DELETE FROM `content` WHERE `cid` = #{cid}")
     void deleteContent(@Param("cid") int cid);
