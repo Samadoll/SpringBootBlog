@@ -15,7 +15,10 @@
     "@testing-library/user-event": "^7.1.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "axios": "^0.19.2"
   },
   "keywords": [
     "rest",
@@ -47,6 +50,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/polyfill": "^7.10.1",
     "@babel/core": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
