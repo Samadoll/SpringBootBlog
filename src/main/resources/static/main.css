@@ -1,51 +1,49 @@
-body {
-    font: 14px "Century Gothic", Futura, sans-serif;
-    margin: 20px;
+.login-register-content {
+    width: 600px;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: auto;
+    padding: 50px;
+    box-shadow: 0 0 20px 0 #888888;
 }
 
-ol,
-ul {
-    padding-left: 30px;
+.input-field-label {
+    font-family: "arial", serif;
+    font-size: 20px;
+    border-radius: 4px;
 }
 
-.board-row:after {
-    clear: both;
-    content: "";
-    display: table;
+.input-field {
+    font-family: "arial", serif;
+    font-size: 120%;
+    color: #454545;
+    width: calc(100% - 22px);
+    height: 40px;
+    border-radius: 4px;
+    border: 1px solid #cccccc;
+    margin: 4px 0 14px 0;
+    padding: 0 10px 0 10px;
 }
 
-.status {
-    margin-bottom: 10px;
+.login-register-button-primary {
+    background-color: steelblue;
+    color: white;
+    font-size: 20px;
+    width: 100%;
+    height: 40px;
+    margin: 1px;
+    border: 1px solid transparent;
+    border-radius: 4px;
 }
 
-.square {
-    background: #fff;
-    border: 1px solid #999;
-    float: left;
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 34px;
-    height: 34px;
-    margin-right: -1px;
-    margin-top: -1px;
-    padding: 0;
-    text-align: center;
-    width: 34px;
-}
-
-.square:focus {
-    outline: none;
-}
-
-.kbd-navigation .square:focus {
-    background: #ddd;
-}
-
-.game {
-    display: flex;
-    flex-direction: row;
-}
-
-.game-info {
-    margin-left: 20px;
+.login-register-button-secondary {
+    background-color: white;
+    color: #454545;
+    font-size: 20px;
+    width: 100%;
+    height: 40px;
+    margin: 1px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
 }
