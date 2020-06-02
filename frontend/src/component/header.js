@@ -1,28 +1,65 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React from "react";
+import {useHistory} from "react-router-dom";
+import {Avatar, Menu, Popover, Position, toaster} from "evergreen-ui";
+import Axios from "axios";
 
 function HeaderButtonGroup(props) {
     const history = useHistory();
 
-    let loggedIn = false;
-
     function handleLogOut() {
+        Axios.defaults.headers.Authorization = localStorage.getItem("Authorization");
+        Axios.post("/api/user/logout");
         localStorage.removeItem("Authorization");
-        history.push("#/home")
+        props.logout();
+        history.push("/")
     }
 
-    return loggedIn
+    return props.isLoggedIn
         ? (
-            <label >Test</label>
+            <div className="header-button-group">
+                <Popover
+                    position={Position.BOTTOM_LEFT}
+                    content={
+                        <Menu>
+                            <Menu.Group>
+                                <Menu.Item icon="person">My Account</Menu.Item>
+                                <Menu.Item icon="book">My Contents</Menu.Item>
+                            </Menu.Group>
+                            <Menu.Divider />
+                            <Menu.Group>
+                                <Menu.Item
+                                    icon="key"
+                                    intent="danger"
+                                    onSelect={() => handleLogOut()}
+                                >
+                                    Sign Out
+                                </Menu.Item>
+                            </Menu.Group>
+                        </Menu>
+                    }
+                >
+                    <Avatar
+                        name={props.userInfo.username}
+                        size={40}
+                        marginTop="5px"
+                    />
+                </Popover>
+            </div>
         )
         : (
             <div className="header-button-group">
                 <button
-                    onClick={() => { history.push("/loginPage") }}
+                    onClick={() => {
+                        if (history.location.pathname === "/loginPage") return;
+                        history.push("/loginPage");
+                    }}
                     className="header-button"
                 >Sign In</button>
                 <button
-                    onClick={() => { history.push("/registerPage") }}
+                    onClick={() => {
+                        if (history.location.pathname === "/registerPage") return;
+                        history.push("/registerPage");
+                    }}
                     className="header-button"
                 >Sign Up</button>
             </div>

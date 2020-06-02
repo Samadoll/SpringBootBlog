@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import Axios from "axios"
 import { toaster } from "evergreen-ui";
 
-export function Login() {
+export function Login(props) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const history = useHistory();
@@ -20,7 +20,8 @@ export function Login() {
                 if (status === 200) {
                     localStorage.setItem("Authorization", token);
                     Axios.defaults.headers.Authorization = token;
-                    history.push("#/")
+                    props.login({ username: username });
+                    history.push("/")
                     toaster.success(data.message);
                 }
             })
@@ -51,7 +52,7 @@ export function Login() {
                     <br/>
                     <div>
                         <label className="input-field-label">Password:</label>
-                        <a className="input-field-label" href="/"
+                        <a className="input-field-label" href="/" tabIndex="-1"
                            style={{float: "right", fontSize: "15px", marginTop: "5px"}}>Forgot Password?</a>
                     </div>
                     <input

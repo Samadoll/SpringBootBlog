@@ -22,7 +22,7 @@ export function Register() {
                 const data = res.data;
                 const status = data.status;
                 if (status === 200) {
-                    history.push("#/loginPage")
+                    history.push("/loginPage")
                     toaster.success(data.message);
                 }
             })

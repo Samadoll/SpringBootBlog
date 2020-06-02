@@ -60,7 +60,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             String token = JwtUtil.sign(user.getUsername(), user.getPassword());
             responseEntity.setStatus(HttpStatus.OK.value());
             responseEntity.setMessage("Successfully Logged In");
-            responseEntity.setData("bearer " + token);
+            responseEntity.setData("Bearer " + token);
             response.setStatus(HttpStatus.OK.value());
         } else {
             responseEntity.setStatus(HttpStatus.BAD_REQUEST.value());
