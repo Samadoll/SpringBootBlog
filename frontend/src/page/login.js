@@ -20,7 +20,7 @@ export function Login() {
                 if (status === 200) {
                     localStorage.setItem("Authorization", token);
                     Axios.defaults.headers.Authorization = token;
-                    history.push("/")
+                    history.push("#/")
                     toaster.success(data.message);
                 }
             })

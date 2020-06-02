@@ -47,3 +47,56 @@
     border: 1px solid #cccccc;
     border-radius: 4px;
 }
+
+.sticky-header {
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: calc(100% - 32px);
+    padding: 10px 16px;
+    background: #ffffff;
+    color: #000000;
+    border-bottom: 1px solid #cccccc;
+    box-shadow: 0 0 5px 0 #888888;
+    height: 50px;
+}
+
+.sticky-header + .content {
+    padding-top: 102px;
+}
+
+
+.header-pages > a {
+    margin: 11px 25px 0 0;
+    font-size: 25px;
+    text-decoration: none;
+    color: black;
+    font-family: "arial", serif;
+    float: left;
+}
+
+.header-pages > a :hover {
+    font-size: 25px;
+    text-decoration: none;
+    color: black;
+    font-family: "arial", serif;
+    float: left;
+}
+
+.header-button-group {
+    float: right;
+    width: auto;
+    height: 100%;
+    margin: auto 0 auto 0;
+}
+
+.header-button-group > button {
+    min-width: 100px;
+    margin: 6px 0 0 10px;
+    height: 40px;
+    font-size: 20px;
+    font-family: "arial", serif;
+    background-color: white;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+}

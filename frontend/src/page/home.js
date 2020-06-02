@@ -1,4 +1,5 @@
 import React from 'react';
+import {Header} from "../component/header";
 
 export default class Home extends React.Component {
     render() {
