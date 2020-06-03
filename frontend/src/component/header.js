@@ -9,7 +9,6 @@ function HeaderButtonGroup(props) {
     function handleLogOut() {
         Axios.defaults.headers.Authorization = localStorage.getItem("Authorization");
         Axios.post("/api/user/logout");
-        localStorage.removeItem("Authorization");
         props.logout();
         history.push("/")
     }

@@ -1,5 +1,7 @@
 package com.springbootblog.springbootblog.controller;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.springbootblog.springbootblog.entity.ResponseEntity;
 import com.springbootblog.springbootblog.entity.ContentEntity;
 import com.springbootblog.springbootblog.security.IsUser;
@@ -15,12 +17,15 @@ import org.springframework.util.Assert;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/content")
 @Validated
 public class ContentController {
+
+    private final String PAGE_SIZE = "10";
 
     @Autowired
     private ContentService contentService;
@@ -86,5 +91,43 @@ public class ContentController {
         data.put("article", contentEntity);
         data.put("tags", tagService.getRelationshipsByContentId(cid));
         return new ResponseEntity(HttpStatus.OK.value(), "Article Obtained", data);
+    }
+
+    @ApiOperation("Get contents of given user")
+    @GetMapping("/myContents")
+    public ResponseEntity getUserContents(@RequestParam(required = false, defaultValue = "1", value = "page") int page,
+                                          @RequestParam(required = false, defaultValue = PAGE_SIZE, value = "pageSize") int pageSize) {
+        PageHelper.startPage(page, pageSize);
+        Page<List<Map<String, Object>>> contents = (Page) contentService.getContentsByAuthorId(Util.getCurrentUid());
+        Map<String, Object> data = new HashMap<>(2);
+        data.put("articles", contents);
+        data.put("count", contents.getPages());
+        return new ResponseEntity(HttpStatus.OK.value(), "Successfully Get Contents", data);
+    }
+
+    @ApiOperation(value = "Get contents in the first page")
+    @GetMapping("/contents")
+    public ResponseEntity index(@RequestParam(required = false, defaultValue = "1", value = "page") int page,
+                                @RequestParam(required = false, defaultValue = PAGE_SIZE, value = "pageSize") int pageSize) {
+        // Pagination
+        PageHelper.startPage(page, pageSize);
+        Page<List<ContentEntity>> contents = (Page) contentService.getContents();
+        Map<String, Object> data = new HashMap<>(2);
+        data.put("articles", contents);
+        data.put("count", contents.getPages());
+        return new ResponseEntity(HttpStatus.OK.value(), "Successfully Get Contents", data);
+    }
+
+    @ApiOperation("Get contents by tag")
+    @GetMapping("/tag/{tag}")
+    public ResponseEntity tags(@PathVariable @Length(min = 1) String tag,
+                               @RequestParam(required = false, defaultValue = "1", value = "page") int page,
+                               @RequestParam(required = false, defaultValue = PAGE_SIZE, value = "pageSize") int pageSize) {
+        PageHelper.startPage(page, pageSize);
+        Page<List<Map<String, Object>>> contents = (Page) contentService.getContentByTag(tag);
+        Map<String, Object> data = new HashMap<>(2);
+        data.put("articles", contents);
+        data.put("count", contents.getPages());
+        return new ResponseEntity(HttpStatus.OK.value(), "Successfully Get Contents", data);
     }
 }

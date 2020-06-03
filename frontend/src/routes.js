@@ -21,6 +21,7 @@ export function Routes() {
 
     function logout() {
         localStorage.removeItem("Authorization");
+        delete Axios.defaults.headers.Authorization;
         setUserInfo({
             username: ""
         });
