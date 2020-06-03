@@ -32,9 +32,10 @@ public interface ContentMapper {
     @Update("UPDATE `content` SET `title` = #{title}, `content` = #{content} WHERE `cid` = #{cid}")
     void updateContent(@Param("cid") int cid, @Param("title") String title, @Param("content") String content);
 
-    @Select("SELECT * FROM `content` ORDER BY `create_time` DESC")
-    @ResultMap("contentMap")
-    List<ContentEntity> findContents();
+    @Select("SELECT `content`.`cid`, `content`.`title`, `content`.`content`,  `user`.`username`, `content`.`create_time` " +
+            "FROM `content` LEFT JOIN `user` ON `content`.`author_id` = `user`.`uid` " +
+            "ORDER BY `content`.`create_time` DESC")
+    List<Map<String, Object>> findContents();
 
     @Select("SELECT `tags`.`tid`, `tags`.`name`, `content`.`cid`, `content`.`title`, `content`.`content`, `content`.`author_id`, `content`.`create_time` " +
             "FROM tags LEFT JOIN relationships ON tags.tid = relationships.tid " +

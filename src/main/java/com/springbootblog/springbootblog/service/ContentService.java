@@ -8,7 +8,7 @@ public interface ContentService {
     void deleteContent(int cid);
     void updateContent(int cid, String title, String content, String[] tags);
     ContentEntity getContent(int cid);
-    List<ContentEntity> getContents();
+    List<Map<String, Object>> getContents();
     List<Map<String, Object>> getContentByTag(String tag);
     List<ContentEntity> getContentsByAuthorId(int authorId);
 }

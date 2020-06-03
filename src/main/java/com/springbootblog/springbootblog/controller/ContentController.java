@@ -111,7 +111,7 @@ public class ContentController {
                                 @RequestParam(required = false, defaultValue = PAGE_SIZE, value = "pageSize") int pageSize) {
         // Pagination
         PageHelper.startPage(page, pageSize);
-        Page<List<ContentEntity>> contents = (Page) contentService.getContents();
+        Page<List<Map<String, Object>>> contents = (Page) contentService.getContents();
         Map<String, Object> data = new HashMap<>(2);
         data.put("articles", contents);
         data.put("count", contents.getPages());

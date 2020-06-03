@@ -61,7 +61,7 @@ public class ContentServiceImp implements ContentService {
     }
 
     @Override
-    public List<ContentEntity> getContents() {
+    public List<Map<String, Object>> getContents() {
         return contentMapper.findContents();
     }
 

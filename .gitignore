@@ -49,3 +49,13 @@ frontend/.env.production.local
 frontend/npm-debug.log*
 frontend/yarn-debug.log*
 frontend/yarn-error.log*
+
+src/main/resources/static/built/
+
+# all DS_Store
+src/main/.DS_Store
+src/main/java/.DS_Store
+src/main/java/com/.DS_Store
+src/main/java/com/springbootblog/.DS_Store
+src/main/resources/.DS_Store
+src/main/resources/static/.DS_Store
