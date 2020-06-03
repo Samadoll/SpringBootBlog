@@ -67,19 +67,23 @@ function HeaderButtonGroup(props) {
 }
 
 export function Header(props) {
-
+    const pages = [
+        {name: "Home", href: "#/", loginRequired: false},
+        {name: "My Content", href: "#/myContents", loginRequired: true},
+        {name: "About", href: "#/", loginRequired: false}
+        ];
     return (
         <div id="header" className="sticky-header">
-            <div className="header-pages">
-                <a href="#/">
-                    <label>Home</label>
-                </a>
-            </div>
-            <div className="header-pages">
-                <a href="#/">
-                    <label>Contents</label>
-                </a>
-            </div>
+            {
+                pages.filter(page => !page.loginRequired || page.loginRequired === props.isLoggedIn)
+                    .map(page =>
+                        <div key={page.name} className="header-pages">
+                            <a href={page.href}>
+                                <label>{page.name}</label>
+                            </a>
+                        </div>
+                    )
+            }
             <HeaderButtonGroup {...props} />
         </div>
     )

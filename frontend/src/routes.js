@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {HashRouter, Switch, Route, Redirect} from "react-router-dom";
-import Home from "./page/home"
+import { Content } from "./page/content"
 import { Login } from "./page/login";
 import { Register } from "./page/register";
 import {Header} from "./component/header";
@@ -20,6 +20,7 @@ export function Routes() {
     }
 
     function logout() {
+        localStorage.removeItem("Authorization");
         setUserInfo({
             username: ""
         });
@@ -36,9 +37,11 @@ export function Routes() {
                 if (status === 200) {
                     setUserInfo({username: res.data.data.username});
                     setIsLoggedIn(true);
+                } else {
+                    logout();
                 }
             } catch (e) {
-                // ignored
+                logout();
             }
         }
         setIsLoading(false);
@@ -67,7 +70,14 @@ export function Routes() {
                         )
                         : (
                             <Switch>
-                                <Route exact path="/" component={Home}/>
+                                <Route exact path="/" >
+                                    <Content userInfo={userInfo} />
+                                </Route>
+                                <Route exact path="/myContents" >
+                                    {
+                                        isLoggedIn ? (<Content userInfo={userInfo} />) : (<Redirect to="/" />)
+                                    }
+                                </Route>
                                 <Route path="/loginPage">
                                     {
                                         isLoggedIn ? (<Redirect to="/" />) : (<Login login={login} />)
@@ -78,6 +88,7 @@ export function Routes() {
                                         isLoggedIn ? (<Redirect to="/" />) : (<Register />)
                                     }
                                 </Route>
+                                <Route exact path="/about" component={Content} />
                             </Switch>
                         )
                 }
