@@ -1,11 +1,26 @@
 import React, { useState } from "react";
 import { Table as EvergreenTable } from "evergreen-ui"
 
+function TableCell(props) {
+    const type = props.type || "text";
+    let value = props.value || "";
+    let element;
+    switch (type) {
+        case "date":
+            value = new Date(value).toDateString();
+            element = <EvergreenTable.TextCell className="TableCellClass">{value}</EvergreenTable.TextCell>
+        case "text":
+            element = <EvergreenTable.TextCell className="TableCellClass">{value}</EvergreenTable.TextCell>
+            break;
+    }
+    return element
+}
+
 export function Table(props) {
 
     return (
-        <EvergreenTable>
-            <EvergreenTable.Head>
+        <EvergreenTable >
+            <EvergreenTable.Head className="TableHeaderRow">
                 {
                     props.headers.map((el, index) =>
                         <EvergreenTable.TextHeaderCell key={index}>
@@ -14,16 +29,20 @@ export function Table(props) {
                     )
                 }
             </EvergreenTable.Head>
-            <EvergreenTable.Body height={240}>
+            <EvergreenTable.Body height={500}>
                 {
-                    props.items.map(item =>
+                    props.items.map((item, index) =>
                         <EvergreenTable.Row
-                            key={item.cid}
-                            isSelectable
+                            key={item[props.itemIdName] || index}
+                            isSelectable={props.isSelectable || false}
                         >
-                            <EvergreenTable.TextCell>{item.title}</EvergreenTable.TextCell>
-                            <EvergreenTable.TextCell>{item.username}</EvergreenTable.TextCell>
-                            <EvergreenTable.TextCell>{item.create_time}</EvergreenTable.TextCell>
+                            {props.headers.map((el, index) =>
+                                <TableCell
+                                    key={index}
+                                    type={props.headerMapping[el].type}
+                                    value={item[props.headerMapping[el].value]}
+                                />
+                            )}
                         </EvergreenTable.Row>
                     )
                 }

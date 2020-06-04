@@ -7,9 +7,12 @@ export function Content(props) {
     const [pageCount, setPageCount] = useState(0);
     const [page, setPage] = useState(1);
     const headers = ["Article", "Author", "Create Time"];
-    const items = [
-        { cid: 1, title: "Test", username: "admin", create_time: "10" }
-    ];
+    const headerMapping = {
+        idName: "cid",
+        Article: { value: "title", type: "text"},
+        Author: { value: "username", type: "text"},
+        "Create Time": { value: "create_time", type: "date"}
+    }
 
     async function fetchContents() {
         try {
@@ -34,8 +37,11 @@ export function Content(props) {
     return (
         <div>
             <Table
+                itemIdName={"cid"}
                 headers={headers}
-                items={items}
+                headerMapping={headerMapping}
+                items={contents}
+                isSelectable={true}
             />
         </div>
     )

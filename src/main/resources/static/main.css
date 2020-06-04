@@ -100,3 +100,12 @@
     border: 1px solid #cccccc;
     border-radius: 4px;
 }
+
+.TableCellClass {
+    border-left: 1px solid #EDF0F2;
+    border-right: 1px solid #EDF0F2;
+}
+
+.TableHeaderRow {
+    padding-right: 0 !important;
+}
