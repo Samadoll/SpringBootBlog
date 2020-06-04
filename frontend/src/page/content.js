@@ -10,8 +10,8 @@ export function Content(props) {
     const headerMapping = {
         idName: "cid",
         Article: { value: "title", type: "text"},
-        Author: { value: "username", type: "text"},
-        "Create Time": { value: "create_time", type: "date"}
+        Author: { value: "username", type: "text", width: 100},
+        "Create Time": { value: "create_time", type: "date", width: 150}
     }
 
     async function fetchContents() {
@@ -32,10 +32,10 @@ export function Content(props) {
 
     useEffect(() => {
         fetchContents();
-    }, [])
+    }, [props.isMyContent])
 
     return (
-        <div>
+        <div className="TableContent">
             <Table
                 itemIdName={"cid"}
                 headers={headers}

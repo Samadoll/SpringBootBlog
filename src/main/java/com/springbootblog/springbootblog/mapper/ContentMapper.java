@@ -43,7 +43,10 @@ public interface ContentMapper {
             "ORDER BY `content`.`create_time` DESC")
     List<Map<String, Object>> findContentsByTag(@Param("tag") String tag);
 
-    @Select("SELECT * FROM `content` WHERE `author_id` = #{authorId} ORDER BY `create_time` DESC")
-    @ResultMap("contentMap")
-    List<ContentEntity> findContentsByAuthorId(@Param("authorId") int authorId);
+//    @Select("SELECT * FROM `content` WHERE `author_id` = #{authorId} ORDER BY `create_time` DESC")
+//    @ResultMap("contentMap")
+    @Select("SELECT `content`.`cid`, `content`.`title`, `content`.`content`,  `user`.`username`, `content`.`create_time` " +
+            "FROM `content` LEFT JOIN `user` ON `content`.`author_id` = `user`.`uid` " +
+            "WHERE `content`.`author_id` = #{authorId} ORDER BY `content`.`create_time` DESC")
+    List<Map<String, Object>> findContentsByAuthorId(@Param("authorId") int authorId);
 }

@@ -109,3 +109,11 @@
 .TableHeaderRow {
     padding-right: 0 !important;
 }
+
+.TableContent {
+    height: auto;
+    width: 90%;
+    margin: auto;
+    border-radius: 4px;
+    border: 1px solid #EDF0F2;
+}

@@ -71,7 +71,7 @@ public class ContentServiceImp implements ContentService {
     }
 
     @Override
-    public List<ContentEntity> getContentsByAuthorId(int authorId) {
+    public List<Map<String, Object>> getContentsByAuthorId(int authorId) {
         return contentMapper.findContentsByAuthorId(authorId);
     }
 }

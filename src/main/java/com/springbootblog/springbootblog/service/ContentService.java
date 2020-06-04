@@ -10,5 +10,5 @@ public interface ContentService {
     ContentEntity getContent(int cid);
     List<Map<String, Object>> getContents();
     List<Map<String, Object>> getContentByTag(String tag);
-    List<ContentEntity> getContentsByAuthorId(int authorId);
+    List<Map<String, Object>> getContentsByAuthorId(int authorId);
 }
