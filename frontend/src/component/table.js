@@ -80,22 +80,31 @@ export function Table(props) {
             </EvergreenTable.Head>
             <EvergreenTable.Body>
                 {
-                    props.items.map((item, index) =>
-                        <EvergreenTable.Row
-                            key={item[props.itemIdName] || index}
-                            isSelectable={props.isSelectable || false}
-                            height={props.rowHeight || 48}
-                        >
-                            {props.headers.map((el, index) =>
-                                <TableCell
-                                    key={index}
-                                    type={props.headerMapping[el].type}
-                                    value={item[props.headerMapping[el].value]}
-                                    width={props.headerMapping[el].width}
-                                />
-                            )}
-                        </EvergreenTable.Row>
-                    )
+                    props.items.length === 0
+                        ? (
+                            <EvergreenTable.Row >
+                                <div className={"no-record"}>
+                                    <label>No Records or No Access Right</label>
+                                </div>
+                            </EvergreenTable.Row>)
+                        : (
+                            props.items.map((item, index) =>
+                                <EvergreenTable.Row
+                                    key={item[props.itemIdName] || index}
+                                    isSelectable={props.isSelectable || false}
+                                    height={props.rowHeight || 48}
+                                >
+                                    {props.headers.map((el, index) =>
+                                        <TableCell
+                                            key={index}
+                                            type={props.headerMapping[el].type}
+                                            value={item[props.headerMapping[el].value]}
+                                            width={props.headerMapping[el].width}
+                                        />
+                                    )}
+                                </EvergreenTable.Row>
+                            )
+                        )
                 }
             </EvergreenTable.Body>
         </EvergreenTable>

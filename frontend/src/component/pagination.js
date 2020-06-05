@@ -6,7 +6,7 @@ export function Pagination(props) {
     let count = props.pagination.pageCount;
     const pages = [];
     for (let i = 1; i <= count; i++) pages.push(i);
-
+    if (count === 0) return null;
     return (
         <div className={props.className}>
             <button

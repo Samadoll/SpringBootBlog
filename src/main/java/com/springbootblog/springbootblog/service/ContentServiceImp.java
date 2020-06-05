@@ -1,6 +1,7 @@
 package com.springbootblog.springbootblog.service;
 
 import com.springbootblog.springbootblog.entity.ContentEntity;
+import com.springbootblog.springbootblog.entity.TagEntity;
 import com.springbootblog.springbootblog.mapper.ContentMapper;
 import com.springbootblog.springbootblog.mapper.RelationshipsMapper;
 import com.springbootblog.springbootblog.mapper.TagsMapper;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +25,8 @@ public class ContentServiceImp implements ContentService {
     @Autowired
     private RelationshipsMapper relationshipsMapper;
 
-    private final TagService tagService = new TagServiceImp();
+    @Autowired
+    private TagService tagService;
 
     @Transactional
     @Override

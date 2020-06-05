@@ -36,7 +36,7 @@ public class ContentController {
     @ApiOperation(value = "Create an article", notes = "Create an article and return article id (cid)")
     @ApiImplicitParam(name = "tags", value = "Article tags, split by comma", required = true)
     @IsUser
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity createContent(@RequestParam @Length(min = 1, max = 100) String title,
                                         @RequestParam @Length(min = 1) String content,
                                         @RequestParam @Length(min = 1) String tags) {

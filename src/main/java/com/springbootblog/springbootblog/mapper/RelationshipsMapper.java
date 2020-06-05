@@ -9,7 +9,7 @@ import java.util.*;
 @Repository
 public interface RelationshipsMapper {
 
-    @Insert("INSERT INTO `relationships` (`cid`, `tid`) VALUES (#{cid}, #{tid}")
+    @Insert("INSERT INTO `relationships` (`cid`, `tid`) VALUES (#{cid}, #{tid})")
     void createRelationship(@Param("cid") int cid, @Param("tid") int tid);
 
     @Select("SELECT `cid`, `relationships`.`tid`, `name` FROM `relationships` LEFT JOIN `tags` ON `relationships`.`tid` = `tags`.`tid` WHERE `cid` = #{cid}")
