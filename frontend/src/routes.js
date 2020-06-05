@@ -72,11 +72,11 @@ export function Routes() {
                         : (
                             <Switch>
                                 <Route exact path="/" >
-                                    <Content isMyContent={false} />
+                                    <Content isMyContent={false} isLoggedIn={isLoggedIn} />
                                 </Route>
                                 <Route exact path="/myContents" >
                                     {
-                                        isLoggedIn ? (<Content isMyContent={true} />) : (<Redirect to="/" />)
+                                        isLoggedIn ? (<Content isMyContent={true} isLoggedIn={isLoggedIn} />) : (<Redirect to="/" />)
                                     }
                                 </Route>
                                 <Route path="/loginPage">

@@ -117,6 +117,7 @@ body {
     font-size: 16px;
     text-overflow: ellipsis;
     overflow: hidden !important;
+    line-height: 20px;
 }
 
 .table-header-cell > span {
@@ -148,8 +149,8 @@ body {
     position: relative;
     top: calc(50% - 15px);
     float: right;
+    margin: 0 10px 0 10px;
 }
-
 
 .pagination-disabled {
     fill: rgba(67, 90, 111, 0.3) !important;
@@ -180,4 +181,34 @@ body {
     font-size: 18px;
     font-family: "arial", serif;
     margin: 0 5px 0 5px;
+}
+
+.table-function-button-group {
+    width: auto;
+    height: 30px;
+    position: relative;
+    top: calc((100% - 30px) / 2);
+    float: left;
+    margin: 0 10px 0 10px;
+}
+
+.table-function-button {
+    font-family: "arial", serif;
+    margin-right: 10px;
+    height: 100%;
+    color: white;
+    background-color: steelblue;
+    border: 1px solid transparent;
+    border-radius: 4px;;
+}
+
+.button-disabled {
+    background-color: lightgrey !important;
+    color: black !important;
+}
+
+.table-function-search {
+    height: 30px;
+    position: relative;
+    top: calc((100% - 30px) / 2);
 }

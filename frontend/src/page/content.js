@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Axios from "axios";
 import {Table} from "../component/table";
+import {Redirect} from "react-router";
 
 export function Content(props) {
     const [contents, setContents] = useState([]);
@@ -18,6 +19,10 @@ export function Content(props) {
         page: page,
         pageCount: pageCount
     }
+    const buttonGroup = [
+        {name: "Create Blog", fn: () => alert("Create Blog"), enable: props.isLoggedIn},
+        {name: "Manage My Blogs", fn: () => alert("Manage My Blog"), enable: props.isLoggedIn}
+    ]
 
     async function fetchContents() {
         try {
@@ -59,6 +64,7 @@ export function Content(props) {
     return (
         <div className="table-content">
             <Table
+                buttonGroup={buttonGroup}
                 pagination={pagination}
                 itemIdName={"cid"}
                 headers={headers}
