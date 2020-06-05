@@ -93,6 +93,22 @@ public class ContentController {
         return new ResponseEntity(HttpStatus.OK.value(), "Article Obtained", data);
     }
 
+    @ApiOperation("Get an editable article by id")
+    @GetMapping("/getEditableContent/{cid}")
+    public ResponseEntity getEditableContent(@PathVariable int cid) {
+        ContentEntity contentEntity = contentService.getContent(cid);
+        if (contentEntity == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND.value(), "Article Not Exist", null);
+        }
+        if (contentEntity.getAuthorId() != Util.getCurrentUid()) {
+            return new ResponseEntity(HttpStatus.FORBIDDEN.value(), "Access Denied", null);
+        }
+        Map<String, Object> data = new HashMap<>(2);
+        data.put("article", contentEntity);
+        data.put("tags", tagService.getRelationshipsByContentId(cid));
+        return new ResponseEntity(HttpStatus.OK.value(), "Article Obtained", data);
+    }
+
     @ApiOperation("Get contents of given user")
     @GetMapping("/myContents")
     public ResponseEntity getUserContents(@RequestParam(required = false, defaultValue = "1", value = "page") int page,

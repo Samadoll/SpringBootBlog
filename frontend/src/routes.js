@@ -3,9 +3,10 @@ import {HashRouter, Switch, Route, Redirect} from "react-router-dom";
 import { Content } from "./page/content"
 import { Login } from "./page/login";
 import { Register } from "./page/register";
-import {Header} from "./component/header";
+import { Header } from "./component/header";
 import Axios from "axios";
-import {Spinner} from "evergreen-ui";
+import { Spinner } from "evergreen-ui";
+import { EditContent } from "./page/editContent";
 
 export function Routes() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -87,6 +88,11 @@ export function Routes() {
                                 <Route exact path="/registerPage" >
                                     {
                                         isLoggedIn ? (<Redirect to="/" />) : (<Register />)
+                                    }
+                                </Route>
+                                <Route exact path="/editContent/:id" >
+                                    {
+                                        isLoggedIn ? (<EditContent isLoggedIn={isLoggedIn}/>) : (<Redirect to="/" />)
                                     }
                                 </Route>
                                 <Route exact path="/about" component={Content} />
