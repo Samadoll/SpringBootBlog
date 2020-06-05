@@ -66,7 +66,7 @@ CREATE TABLE `comments` (
   PRIMARY KEY (`id`),
   FOREIGN KEY (`contentId`)
     REFERENCES content (`cid`)
-    ON DELETE CASCADE,
+    ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;

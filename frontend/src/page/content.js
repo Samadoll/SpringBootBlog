@@ -10,8 +10,13 @@ export function Content(props) {
     const headerMapping = {
         idName: "cid",
         Article: { value: "title", type: "text"},
-        Author: { value: "username", type: "text", width: 100},
+        Author: { value: "username", type: "text", width: 150},
         "Create Time": { value: "create_time", type: "date", width: 150}
+    }
+    const pagination = {
+        changePage: changePage,
+        page: page,
+        pageCount: pageCount
     }
 
     async function fetchContents() {
@@ -34,14 +39,33 @@ export function Content(props) {
         fetchContents();
     }, [props.isMyContent])
 
+    function changePage(pageNum) {
+        if (page === pageNum) return;
+        const url = (props.isMyContent ? "/api/content/myContents" : "/api/content/contents") + `?page=${pageNum}`;
+        const query = new URLSearchParams();
+        query.append("page", pageNum);
+        Axios.get(url)
+            .then((res) => {
+                const status = res.status;
+                if (status === 200) {
+                    const data = res.data.data;
+                    setPage(pageNum);
+                    setContents(data["articles"]);
+                    console.log(data["articles"]);
+                }
+            })
+    }
+
     return (
-        <div className="TableContent">
+        <div className="table-content">
             <Table
+                pagination={pagination}
                 itemIdName={"cid"}
                 headers={headers}
                 headerMapping={headerMapping}
                 items={contents}
                 isSelectable={true}
+                rowHeight={60}
             />
         </div>
     )
