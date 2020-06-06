@@ -1,33 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import Axios from "axios";
-import {Table} from "../component/table";
-import {useHistory} from "react-router";
+import {Table} from "./table";
 
 export function Content(props) {
-    const history = useHistory()
     const [contents, setContents] = useState([]);
     const [pageCount, setPageCount] = useState(0);
     const [page, setPage] = useState(1);
-    const headers = ["Article", "Author", "Create Time"];
-    const headerMapping = {
-        idName: "cid",
-        Article: { value: "title", type: "text"},
-        Author: { value: "username", type: "text", width: 150},
-        "Create Time": { value: "create_time", type: "date", width: 150}
-    }
     const pagination = {
         changePage: changePage,
         page: page,
         pageCount: pageCount
     }
-    const buttonGroup = [
-        {name: "Create Blog", fn: () => history.push("/editContent/0"), enable: props.isLoggedIn},
-        {name: "Manage My Blogs", fn: () => alert("TODO"), enable: props.isLoggedIn}
-    ]
 
     async function fetchContents() {
         try {
-            const url = props.isMyContent ? "/api/content/myContents" : "/api/content/contents";
+            const url = props.requestUrl;
             const res = await Axios.get(url);
             const status = res.status;
             if (status === 200) {
@@ -46,7 +33,7 @@ export function Content(props) {
 
     function changePage(pageNum) {
         if (page === pageNum) return;
-        const url = (props.isMyContent ? "/api/content/myContents" : "/api/content/contents") + `?page=${pageNum}`;
+        const url = props.requestUrl + `?page=${pageNum}`;
         const query = new URLSearchParams();
         query.append("page", pageNum);
         Axios.get(url)
@@ -64,11 +51,11 @@ export function Content(props) {
     return (
         <div className="table-content">
             <Table
-                buttonGroup={buttonGroup}
+                buttonGroup={props.buttonGroup}
                 pagination={pagination}
                 itemIdName={"cid"}
-                headers={headers}
-                headerMapping={headerMapping}
+                headers={props.headers}
+                headerMapping={props.headerMapping}
                 items={contents}
                 isSelectable={true}
                 rowHeight={60}

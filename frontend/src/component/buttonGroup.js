@@ -6,7 +6,7 @@ export function ButtonGroup(props) {
             {
                 props.buttonGroup.map((el, index) =>
                     <button
-                        className={props.buttonClass + (el.enable ? "" : " button-disabled")}
+                        className={(el.className || props.buttonClass) + (el.enable ? " " : " button-disabled ")}
                         key={index}
                         tabIndex={-1}
                         disabled={el.enable ? "" : "disabled"}

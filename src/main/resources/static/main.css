@@ -220,6 +220,16 @@ textarea, select, input, button { outline: none; }
     border-radius: 4px;;
 }
 
+.table-function-button-danger {
+    font-family: "arial", serif;
+    margin-right: 10px;
+    height: 100%;
+    color: white;
+    border: 1px solid transparent;
+    border-radius: 4px;;
+    background-color: firebrick;
+}
+
 .button-disabled {
     background-color: lightgrey !important;
     color: black !important;
