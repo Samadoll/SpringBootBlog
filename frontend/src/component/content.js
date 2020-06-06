@@ -35,7 +35,7 @@ export function Content(props) {
         try {
             const url = props.requestUrl;
             const res = await Axios.get(url);
-            const status = res.status;
+            const status = res.data.status;
             if (status === 200) {
                 const data = res.data.data;
                 setPageCount(data.count);
@@ -49,7 +49,7 @@ export function Content(props) {
 
     useEffect(() => {
         fetchContents();
-    }, [props.isMyContent])
+    }, [props.isMyContent, props.triggerUpdate])
 
     function changePage(pageNum) {
         if (page === pageNum) return;
@@ -58,7 +58,7 @@ export function Content(props) {
         query.append("page", pageNum);
         Axios.get(url)
             .then((res) => {
-                const status = res.status;
+                const status = res.data.status;
                 if (status === 200) {
                     const data = res.data.data;
                     setPage(pageNum);

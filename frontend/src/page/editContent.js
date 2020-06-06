@@ -11,7 +11,7 @@ export function EditContent(props) {
     const [contentBody, setContentBody] = useState("");
     const [isToCreate, setIsToCreate] = useState(true);
 
-    async function fetchBlog(id) {
+    async function fetchContent(id) {
         if (Number(id) === 0) return;
         try {
             const url = "/api/content/getEditableContent/" + id;
@@ -34,7 +34,7 @@ export function EditContent(props) {
     }
 
     useEffect(() => {
-        fetchBlog(id);
+        fetchContent(id);
     }, [])
 
     function addTag(value) {
@@ -155,6 +155,12 @@ export function EditContent(props) {
                 >
                     { isToCreate ? "Create" : "Update" }
                 </button>
+                <br/>
+                <br/>
+                <button
+                    onClick={() => history.goBack()}
+                    className="login-register-button-secondary"
+                >Back</button>
             </div>
         </div>
     )

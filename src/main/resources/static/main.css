@@ -237,7 +237,7 @@ textarea, select, input, button { outline: none; }
     color: white;
     border: 1px solid transparent;
     border-radius: 4px;;
-    background-color: firebrick;
+    background-color: #EC4C47;
     min-width: 50px;
 }
 
