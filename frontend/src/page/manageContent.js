@@ -9,11 +9,29 @@ export function ManageContent(props) {
     const headerMapping = {
         idName: "cid",
         Article: { value: "title", type: "text"},
-        Actions: { value: "create_time", type: "date", width: 150}
+        Actions: {
+            value: [
+                { name: "Alert", fn: alertEl, enable: true },
+                { name: "Edit", fn: edit, enable: true }
+            ],
+            type: "buttons",
+            width: 200,
+            isCentral: true
+        }
     }
     const buttonGroup = [
+        {name: "Create Blog", fn: () => history.push("/editContent/0"), enable: props.isLoggedIn},
         {name: "Delete Selected", fn: () => alert("TODO"), enable: true, className: "table-function-button-danger"}
     ]
+
+    function alertEl(el) {
+        console.log(el);
+        alert("test");
+    }
+
+    function edit(el) {
+        history.push("/editContent/" + el["cid"]);
+    }
 
     return (
         <Content

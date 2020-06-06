@@ -6,7 +6,6 @@ import Axios from "axios";
 export function EditContent(props) {
     const history = useHistory()
     const {id} = useParams();
-    console.log(id);
     const [title, setTitle] = useState("");
     const [tags, setTags] = useState([]);
     const [contentBody, setContentBody] = useState("");
@@ -20,7 +19,6 @@ export function EditContent(props) {
             const status = res.data.status;
             if (status === 200) {
                 const data = res.data.data;
-                console.log(data);
                 const article = data.article
                 setTitle(article.title);
                 setContentBody(article.content);
@@ -41,8 +39,6 @@ export function EditContent(props) {
 
     function addTag(value) {
         const val = (value[0] || "").trim();
-        console.log(val);
-        console.log(tags);
         if (val === "") {
             toaster.danger("Empty value cannot be added.");
             return;

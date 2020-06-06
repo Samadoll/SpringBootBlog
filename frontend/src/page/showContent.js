@@ -9,8 +9,8 @@ export function ShowContent(props) {
     const headerMapping = {
         idName: "cid",
         Article: { value: "title", type: "text"},
-        Author: { value: "username", type: "text", width: 150},
-        "Create Time": { value: "create_time", type: "date", width: 150}
+        Author: { value: "username", type: "text", width: 150, isCentral: true},
+        "Create Time": { value: "create_time", type: "date", width: 150, isCentral: true}
     }
     const buttonGroup = [
         {name: "Create Blog", fn: () => history.push("/editContent/0"), enable: props.isLoggedIn},
