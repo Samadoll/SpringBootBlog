@@ -62,6 +62,7 @@ export function Content(props) {
                 if (status === 200) {
                     const data = res.data.data;
                     setPage(pageNum);
+                    buildContents(data["articles"], props.headers, props.headerMapping);
                     setContents(data["articles"]);
                 }
             })

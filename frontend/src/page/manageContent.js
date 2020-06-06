@@ -27,7 +27,7 @@ export function ManageContent(props) {
 
     function alertEl(el) {
         console.log(el);
-        alert("test");
+        alert(el.title);
     }
 
     function edit(el) {
