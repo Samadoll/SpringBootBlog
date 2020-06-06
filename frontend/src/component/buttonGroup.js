@@ -10,7 +10,7 @@ export function ButtonGroup(props) {
                         key={index}
                         tabIndex={-1}
                         disabled={el.enable ? "" : "disabled"}
-                        onClick={() => props.targetParam !== undefined ? el.fn.apply(null, props.targetParam) : el.fn()}
+                        onClick={() => props.targetParam !== undefined && el.requiredParam ? el.fn.apply(null, props.targetParam) : el.fn()}
                     >
                         {el.name}
                     </button>

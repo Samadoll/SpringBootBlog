@@ -19,23 +19,14 @@ function TableCell(props) {
     let element;
     switch (type) {
         case "date":
-            if (props.valueMapping !== undefined) value = value[props.valueMapping];
             if (!props.isHeaderCell) value = new Date(value).toDateString();
             element = <Cell type={"text"} isHeaderCell={props.isHeaderCell || false} properties={properties} value={value} />
             break;
         case "text":
-            if (props.valueMapping !== undefined) value = value[props.valueMapping];
             element = <Cell type={"text"} isHeaderCell={props.isHeaderCell || false} properties={properties} value={value} />
             break;
         case "buttons":
-            let group = (
-                <ButtonGroup
-                    buttonGroup={props.valueMapping}
-                    groupClass={"table-cell-function-button-group"}
-                    buttonClass={"table-function-button"}
-                    targetParam={[value]}
-                />);
-            element = <Cell type={"buttons"} properties={properties} value={group} />
+            element = <Cell type={"buttons"} properties={properties} value={value} />
             break;
     }
     return element
@@ -43,8 +34,6 @@ function TableCell(props) {
 
 function Cell(props) {
     switch (props.type) {
-        case "buttons":
-            return <EvergreenTable.Cell {...props.properties} >{props.value}</EvergreenTable.Cell>
         case "text":
             return props.isHeaderCell
                 ? <EvergreenTable.TextCell {...props.properties} >{props.value}</EvergreenTable.TextCell>
@@ -117,9 +106,8 @@ export function Table(props) {
                                         <TableCell
                                             key={index}
                                             type={props.headerMapping[el].type}
-                                            value={item}
+                                            value={item[props.headerMapping[el].value]}
                                             width={props.headerMapping[el].width}
-                                            valueMapping={props.headerMapping[el].value}
                                             isCentral={props.headerMapping[el].isCentral}
                                         />
                                     )}

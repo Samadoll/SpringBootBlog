@@ -1,6 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import Axios from "axios";
 import {Table} from "./table";
+import {ButtonGroup} from "./buttonGroup";
+
+function buildContents(items, headers, headerMapping) {
+    for (let header of headers) {
+        let type = headerMapping[header].type;
+        if (type === "buttons") {
+            items.forEach((item) => {
+                item[header] = (
+                    <ButtonGroup
+                        buttonGroup={headerMapping[header].buttons}
+                        groupClass={"table-cell-function-button-group"}
+                        buttonClass={"table-function-button"}
+                        targetParam={[item]}
+                    />
+                )
+            })
+        }
+    }
+}
 
 export function Content(props) {
     const [contents, setContents] = useState([]);
@@ -20,6 +39,7 @@ export function Content(props) {
             if (status === 200) {
                 const data = res.data.data;
                 setPageCount(data.count);
+                buildContents(data["articles"], props.headers, props.headerMapping);
                 setContents(data["articles"]);
             }
         } catch (e) {
@@ -43,7 +63,6 @@ export function Content(props) {
                     const data = res.data.data;
                     setPage(pageNum);
                     setContents(data["articles"]);
-                    console.log(data["articles"]);
                 }
             })
     }

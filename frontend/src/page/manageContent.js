@@ -10,13 +10,14 @@ export function ManageContent(props) {
         idName: "cid",
         Article: { value: "title", type: "text"},
         Actions: {
-            value: [
-                { name: "Alert", fn: alertEl, enable: true },
-                { name: "Edit", fn: edit, enable: true }
-            ],
+            value: "Actions",
             type: "buttons",
             width: 200,
-            isCentral: true
+            isCentral: true,
+            buttons: [
+                { name: "Alert", fn: alertEl, enable: true, requiredParam: true },
+                { name: "Edit", fn: edit, enable: true, requiredParam: true }
+            ]
         }
     }
     const buttonGroup = [
