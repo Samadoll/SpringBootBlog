@@ -2,9 +2,10 @@ import React, {useEffect, useState} from "react";
 import {TagInput, toaster} from "evergreen-ui";
 import {useHistory, useParams} from "react-router";
 import Axios from "axios";
+import {ButtonGroup} from "../component/buttonGroup";
 
 function Paragraph(props) {
-    let paragraphs = props.content.replaceAll("\r", "").split("\n");
+    let paragraphs = (props.content || "").replaceAll("\r", "").split("\n");
     return (
         <div style={{width: "95%", margin: "auto"}} className={props.className || "readonly-field-textarea"}>
             {paragraphs.filter((el) => el !== "").map((el, index) => <p key={index}>{el}</p>)}
@@ -18,7 +19,7 @@ export function ViewContent(props) {
     const [title, setTitle] = useState("");
     const [tags, setTags] = useState([]);
     const [contentBody, setContentBody] = useState("");
-    const [author, setAuthor] = useState("Unknown");
+    const [buttonGroup, setButtonGroup] = useState([]);
 
     async function fetchContent(id) {
         if (Number(id) === 0) return;
@@ -32,6 +33,10 @@ export function ViewContent(props) {
                 setTitle(article.title);
                 setContentBody(article.content);
                 setTags(data.tags.map((tag) => tag.name));
+                setButtonGroup([
+                    {name: "Back", fn: () => history.goBack(), enable: true},
+                    {name: "Edit", fn: handleEdit, enable: article["authorId"] === props.userInfo.uid, requiredParam: true}
+                ])
             } else {
                 toaster.danger(res.data.message);
                 history.goBack();
@@ -45,10 +50,23 @@ export function ViewContent(props) {
         fetchContent(id);
     }, [id])
 
+    function handleEdit(id) {
+        history.push("/editContent/" + id)
+    }
+
     return (
         <div className={"edit-content"}>
-            <div style={{textAlign: "center", fontFamily: "Verdana", fontSize: "30px"}}>
-                <label>{title}</label>
+            <div>
+                <ButtonGroup
+                    groupClass={"table-function-button-group"}
+                    buttonClass={"table-function-button"}
+                    buttonGroup={buttonGroup}
+                    targetParam={[id]}
+                />
+                <br/><br/>
+                <div style={{textAlign: "center", fontFamily: "Verdana", fontSize: "30px"}}>
+                    <label>{title}</label>
+                </div>
             </div>
             <hr style={{borderTop: "1px solid #EDF0F2", margin: "15px 10px"}} />
             {/*<div style={{width: "95%", margin: "auto"}}>*/}

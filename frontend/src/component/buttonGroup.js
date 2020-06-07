@@ -9,7 +9,7 @@ export function ButtonGroup(props) {
                         className={(el.className || props.buttonClass) + (el.enable ? " " : " button-disabled ")}
                         key={index}
                         tabIndex={-1}
-                        disabled={el.enable ? "" : "disabled"}
+                        disabled={!el.enable}
                         onClick={() => props.targetParam !== undefined && el.requiredParam ? el.fn.apply(null, props.targetParam) : el.fn()}
                     >
                         {el.name}

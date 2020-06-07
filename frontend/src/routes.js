@@ -52,7 +52,10 @@ export function Routes() {
                 const res = await Axios.get("/api/user/checkAuth");
                 const status = res.status;
                 if (status === 200) {
-                    setUserInfo({username: res.data.data.username});
+                    setUserInfo({
+                        username: res.data.data.username,
+                        uid: res.data.data.uid
+                    });
                     setIsLoggedIn(true);
                 } else {
                     logout();

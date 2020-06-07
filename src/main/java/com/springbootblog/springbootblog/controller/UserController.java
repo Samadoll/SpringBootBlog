@@ -49,6 +49,7 @@ public class UserController {
         if (cache == null) return new ResponseEntity(HttpStatus.UNAUTHORIZED.value(), "Please Log In", null);
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername(user.getUsername());
+        userEntity.setUid(Util.getCurrentUid());
         return new ResponseEntity(HttpStatus.OK.value(), "OK", userEntity);
     }
 

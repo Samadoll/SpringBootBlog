@@ -18,7 +18,6 @@ export function DisplayContents(props) {
     ]
 
     function handleSelect(el) {
-        console.log(el);
         history.push("/content/" + el["cid"]);
     }
 
