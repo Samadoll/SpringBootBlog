@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {TagInput, toaster} from "evergreen-ui";
+import {Badge, toaster} from "evergreen-ui";
 import {useHistory, useParams} from "react-router";
 import Axios from "axios";
 import {ButtonGroup} from "../component/buttonGroup";
@@ -68,14 +68,10 @@ export function ViewContent(props) {
                     <label>{title}</label>
                 </div>
             </div>
-            <hr style={{borderTop: "1px solid #EDF0F2", margin: "15px 10px"}} />
-            {/*<div style={{width: "95%", margin: "auto"}}>*/}
-            {/*    <textarea*/}
-            {/*        className={"readonly-field-textarea"}*/}
-            {/*        value={contentBody}*/}
-            {/*        readOnly={true}*/}
-            {/*    />*/}
-            {/*</div>*/}
+            <div style={{width: "98%", margin: "10px auto", textAlign: "center"}}>
+                {tags.map((tag, index) => <Badge key={index} color="blue" margin={4}>{tag}</Badge>)}
+            </div>
+            <hr style={{borderTop: "1px solid #EDF0F2", margin: "5px 10px"}} />
             <Paragraph content={contentBody} />
             <hr style={{borderTop: "1px solid #EDF0F2"}} />
             <div className={"comment-section"} >

@@ -43,8 +43,8 @@ export function EditContent(props) {
             toaster.danger("Empty value cannot be added.");
             return;
         }
-        if (val.length > 30) {
-            toaster.danger("Tag is too long (limit: 30 characters).");
+        if (val.length > 20) {
+            toaster.danger("Tag is too long (limit: 20 characters).");
             return;
         }
         if (tags.includes(val)) {
