@@ -5,7 +5,7 @@ import Axios from "axios";
 import {ButtonGroup} from "../component/buttonGroup";
 
 function Paragraph(props) {
-    let paragraphs = (props.content || "").replaceAll("\r", "").split("\n");
+    let paragraphs = props.content.replace(/(\r)/g, "").split("\n");
     return (
         <div style={{width: "95%", margin: "auto"}} className={props.className || "readonly-field-textarea"}>
             {paragraphs.filter((el) => el !== "").map((el, index) => <p key={index}>{el}</p>)}
