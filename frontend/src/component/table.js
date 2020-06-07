@@ -101,6 +101,7 @@ export function Table(props) {
                                     key={item[props.itemIdName] || index}
                                     isSelectable={props.isSelectable || false}
                                     height={props.rowHeight || 48}
+                                    onSelect={props.rowOnSelect ? () => props.rowOnSelect(item) : () => {}}
                                 >
                                     {props.headers.map((el, index) =>
                                         <TableCell

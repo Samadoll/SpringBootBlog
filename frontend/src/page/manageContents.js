@@ -4,7 +4,7 @@ import {Content} from "../component/content";
 import {Dialog, toaster} from "evergreen-ui";
 import Axios from "axios";
 
-export function ManageContent(props) {
+export function ManageContents(props) {
     const history = useHistory()
     const url = "/api/content/myContents";
     const headers = ["Article", "Actions"];

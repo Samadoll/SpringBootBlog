@@ -2,7 +2,7 @@ import React from "react";
 import {Content} from "../component/content";
 import {useHistory} from "react-router";
 
-export function ShowContent(props) {
+export function DisplayContents(props) {
     const history = useHistory();
     const url = props.isMyContent ? "/api/content/myContents" : "/api/content/contents";
     const headers = ["Article", "Author", "Create Time"];
@@ -17,6 +17,11 @@ export function ShowContent(props) {
         {name: "Manage My Blogs", fn: () => history.push("/manageContents"), enable: props.isLoggedIn}
     ]
 
+    function handleSelect(el) {
+        console.log(el);
+        history.push("/content/" + el["cid"]);
+    }
+
     return (
         <Content
             isLoggedIn={props.isLoggedIn}
@@ -25,6 +30,7 @@ export function ShowContent(props) {
             buttonGroup={buttonGroup}
             requestUrl={url}
             isMyContent={props.isMyContent}
+            rowOnSelect={handleSelect}
         />
     )
 }

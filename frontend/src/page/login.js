@@ -16,11 +16,12 @@ export function Login(props) {
             .then(res => {
                 const data = res.data;
                 const status = data.status;
-                const token = data.data;
                 if (status === 200) {
+                    const token = data.data.token;
+                    const uid = data.data.uid;
                     localStorage.setItem("Authorization", token);
                     Axios.defaults.headers.Authorization = token;
-                    props.login({ username: username });
+                    props.login({ username: username, uid: uid });
                     history.push("/")
                     toaster.success(data.message);
                 }

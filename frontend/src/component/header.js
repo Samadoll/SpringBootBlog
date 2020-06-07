@@ -21,7 +21,7 @@ function HeaderButtonGroup(props) {
                     content={
                         <Menu>
                             <Menu.Group>
-                                <Menu.Item icon="person" onSelect={() => alert("TODO")}>My Account</Menu.Item>
+                                <Menu.Item icon="person" onSelect={() => alert(props.userInfo.uid)}>My Account</Menu.Item>
                                 <Menu.Item icon="book" onSelect={() => history.push("/manageContents")}>My Contents</Menu.Item>
                             </Menu.Group>
                             <Menu.Divider />

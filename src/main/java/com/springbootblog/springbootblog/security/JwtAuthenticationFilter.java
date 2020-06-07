@@ -3,6 +3,7 @@ package com.springbootblog.springbootblog.security;
 import com.springbootblog.springbootblog.entity.ResponseEntity;
 import com.springbootblog.springbootblog.util.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.springbootblog.springbootblog.util.Util;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +16,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -60,7 +63,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             String token = JwtUtil.sign(user.getUsername(), user.getPassword());
             responseEntity.setStatus(HttpStatus.OK.value());
             responseEntity.setMessage("Successfully Logged In");
-            responseEntity.setData("Bearer " + token);
+            Map<String, Object> dataMap = new HashMap<>(3);
+            dataMap.put("username", user.getUsername());
+            dataMap.put("uid", Util.getCurrentUid());
+            dataMap.put("token", "Bearer " + token);
+            responseEntity.setData(dataMap);
             response.setStatus(HttpStatus.OK.value());
         } else {
             responseEntity.setStatus(HttpStatus.BAD_REQUEST.value());

@@ -79,6 +79,7 @@ export function Content(props) {
                 items={contents}
                 isSelectable={true}
                 rowHeight={60}
+                rowOnSelect={props.rowOnSelect}
             />
         </div>
     )

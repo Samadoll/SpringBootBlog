@@ -137,13 +137,13 @@ export function EditContent(props) {
                         <label className="input-field-label">
                             Content:
                             <label className={"count-label"}>
-                                ({contentBody.length}/1000)
+                                ({contentBody.length}/5000)
                             </label>
                         </label>
                     </div>
                     <textarea
                         className={"input-field input-field-textarea"}
-                        maxLength={1000}
+                        maxLength={5000}
                         onChange={e => setContentBody(e.target.value)}
                         value={contentBody}
                     />

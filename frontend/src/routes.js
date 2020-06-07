@@ -7,8 +7,9 @@ import { Header } from "./component/header";
 import Axios from "axios";
 import { Spinner } from "evergreen-ui";
 import { EditContent } from "./page/editContent";
-import { ManageContent } from "./page/manageContent";
-import {ShowContent} from "./page/showContent";
+import { ManageContents } from "./page/manageContents";
+import { DisplayContents } from "./page/displayContents";
+import { ViewContent } from "./page/viewContent";
 
 function ProtectedRoute(props) {
     return (
@@ -23,7 +24,8 @@ function ProtectedRoute(props) {
 export function Routes() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userInfo, setUserInfo] = useState({
-        username: ""
+        username: "",
+        uid: 0
     });
     const [isLoading, setIsLoading] = useState(true)
 
@@ -36,7 +38,8 @@ export function Routes() {
         localStorage.removeItem("Authorization");
         delete Axios.defaults.headers.Authorization;
         setUserInfo({
-            username: ""
+            username: "",
+            uid: 0
         });
         setIsLoggedIn(false);
     }
@@ -85,16 +88,16 @@ export function Routes() {
                         : (
                             <Switch>
                                 <Route exact path="/" >
-                                    <ShowContent isMyContent={false} isLoggedIn={isLoggedIn} />
+                                    <DisplayContents isMyContent={false} isLoggedIn={isLoggedIn} />
                                 </Route>
                                 <Route exact path="/myContents" >
                                     {
-                                        isLoggedIn ? (<ShowContent isMyContent={true} isLoggedIn={isLoggedIn} />) : (<Redirect to="/" />)
+                                        isLoggedIn ? (<DisplayContents isMyContent={true} isLoggedIn={isLoggedIn} />) : (<Redirect to="/" />)
                                     }
                                 </Route>
                                 <Route exact path="/manageContents" >
                                     {
-                                        isLoggedIn ? (<ManageContent isMyContent={true} isLoggedIn={isLoggedIn} />) : (<Redirect to="/" />)
+                                        isLoggedIn ? (<ManageContents isMyContent={true} isLoggedIn={isLoggedIn} />) : (<Redirect to="/" />)
                                     }
                                 </Route>
                                 <Route path="/loginPage">
@@ -112,10 +115,13 @@ export function Routes() {
                                         isLoggedIn ? (<EditContent isLoggedIn={isLoggedIn}/>) : (<Redirect to="/" />)
                                     }
                                 </Route>
-                                {/*<ProtectedRoute path={"/myContents"} condition={isLoggedIn} target={<ShowContent isMyContent={true} isLoggedIn={isLoggedIn} />} />*/}
-                                {/*<ProtectedRoute path={"/manageContents"} condition={isLoggedIn} target={<ManageContent isMyContent={true} isLoggedIn={isLoggedIn} />} />*/}
+                                <Route exact path="/content/:id" >
+                                    <ViewContent isLoggedIn={isLoggedIn} userInfo={userInfo}/>
+                                </Route>
+                                {/*<ProtectedRoute path={"/myContents"} condition={isLoggedIn} target={<DisplayContents isMyContent={true} isLoggedIn={isLoggedIn} />} />*/}
+                                {/*<ProtectedRoute path={"/manageContents"} condition={isLoggedIn} target={<ManageContents isMyContent={true} isLoggedIn={isLoggedIn} />} />*/}
                                 {/*<ProtectedRoute path={"/loginPage"} condition={!isLoggedIn} target={<Login login={login} />} />*/}
-                                {/*<ProtectedRoute path={"/registerPage"} condition={!isLoggedIn} target={<ShowContent isMyContent={true} isLoggedIn={isLoggedIn} />} />*/}
+                                {/*<ProtectedRoute path={"/registerPage"} condition={!isLoggedIn} target={<DisplayContents isMyContent={true} isLoggedIn={isLoggedIn} />} />*/}
                                 {/*<ProtectedRoute path={"/editContent/:id"} condition={isLoggedIn} target={<EditContent isLoggedIn={isLoggedIn}/>} />*/}
                                 <Route exact path="/about" component={Content} />
                             </Switch>
