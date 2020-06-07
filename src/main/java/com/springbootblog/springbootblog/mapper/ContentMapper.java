@@ -37,6 +37,15 @@ public interface ContentMapper {
             "ORDER BY `content`.`create_time` DESC")
     List<Map<String, Object>> findContents();
 
+    @Select("SELECT `C`.`cid`, `C`.`title`, `C`.`content`,  `U`.`username`, `C`.`create_time`, GROUP_CONCAT(`T`.`name` SEPARATOR ',') AS `tag` " +
+            "FROM `content` `C` " +
+            "LEFT JOIN `user` `U` ON `C`.`author_id` = `U`.`uid` " +
+            "LEFT JOIN `relationships` `R` ON `C`.`cid` = `R`.`cid` " +
+            "LEFT JOIN `tags` `T` ON `R`.`tid` = `T`.`tid` " +
+            "GROUP BY `C`.`cid`, `C`.`title`, `C`.`content`,  `U`.`username`, `C`.`create_time` " +
+            "ORDER BY `C`.`create_time` DESC")
+    List<Map<String, Object>> findContentsWithTags();
+
     @Select("SELECT `tags`.`tid`, `tags`.`name`, `content`.`cid`, `content`.`title`, `content`.`content`, `content`.`author_id`, `content`.`create_time` " +
             "FROM tags LEFT JOIN relationships ON tags.tid = relationships.tid " +
             "LEFT JOIN content ON relationships.cid = content.cid WHERE tags.`name` = #{tag} " +
@@ -49,4 +58,14 @@ public interface ContentMapper {
             "FROM `content` LEFT JOIN `user` ON `content`.`author_id` = `user`.`uid` " +
             "WHERE `content`.`author_id` = #{authorId} ORDER BY `content`.`create_time` DESC")
     List<Map<String, Object>> findContentsByAuthorId(@Param("authorId") int authorId);
+
+    @Select("SELECT `C`.`cid`, `C`.`title`, `C`.`content`,  `U`.`username`, `C`.`create_time`, GROUP_CONCAT(`T`.`name` SEPARATOR ',') AS `tag` " +
+            "FROM `content` `C` " +
+            "LEFT JOIN `user` `U` ON `C`.`author_id` = `U`.`uid` " +
+            "LEFT JOIN `relationships` `R` ON `C`.`cid` = `R`.`cid` " +
+            "LEFT JOIN `tags` `T` ON `R`.`tid` = `T`.`tid` " +
+            "WHERE `C`.`author_id` = #{authorId} " +
+            "GROUP BY `C`.`cid`, `C`.`title`, `C`.`content`,  `U`.`username`, `C`.`create_time` " +
+            "ORDER BY `C`.`create_time` DESC")
+    List<Map<String, Object>> findContentsWithTagsByAuthorId(@Param("authorId") int authorId);
 }

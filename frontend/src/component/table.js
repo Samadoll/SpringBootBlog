@@ -14,7 +14,7 @@ function TableCell(props) {
         properties.flexShrink = 0;
         properties.flexGrow = 0;
     }
-    if (props.isHeaderCell && type === "buttons") type = "text";
+    if (props.isHeaderCell && (type === "buttons" || type === "custom")) type = "text";
 
     let element;
     switch (type) {
@@ -26,7 +26,8 @@ function TableCell(props) {
             element = <Cell type={"text"} isHeaderCell={props.isHeaderCell || false} properties={properties} value={value} />
             break;
         case "buttons":
-            element = <Cell type={"buttons"} properties={properties} value={value} />
+        case "custom":
+            element = <Cell type={type} properties={properties} value={value} />
             break;
     }
     return element
@@ -102,6 +103,7 @@ export function Table(props) {
                                     isSelectable={props.isSelectable || false}
                                     height={props.rowHeight || 48}
                                     onSelect={props.rowOnSelect ? () => props.rowOnSelect(item) : () => {}}
+                                    className={props.rowClass || ""}
                                 >
                                     {props.headers.map((el, index) =>
                                         <TableCell

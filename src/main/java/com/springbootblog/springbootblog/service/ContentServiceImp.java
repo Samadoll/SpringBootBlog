@@ -63,7 +63,7 @@ public class ContentServiceImp implements ContentService {
 
     @Override
     public List<Map<String, Object>> getContents() {
-        return contentMapper.findContents();
+        return contentMapper.findContentsWithTags();
     }
 
     @Override
@@ -73,6 +73,6 @@ public class ContentServiceImp implements ContentService {
 
     @Override
     public List<Map<String, Object>> getContentsByAuthorId(int authorId) {
-        return contentMapper.findContentsByAuthorId(authorId);
+        return contentMapper.findContentsWithTagsByAuthorId(authorId);
     }
 }

@@ -8,7 +8,7 @@ export function DisplayContents(props) {
     const headers = ["Article", "Author", "Create Time"];
     const headerMapping = {
         idName: "cid",
-        Article: { value: "title", type: "text"},
+        Article: { value: "article", type: "custom"},
         Author: { value: "username", type: "text", width: 150, isCentral: true},
         "Create Time": { value: "create_time", type: "date", width: 150, isCentral: true}
     }

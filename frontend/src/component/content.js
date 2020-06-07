@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Axios from "axios";
 import {Table} from "./table";
 import {ButtonGroup} from "./buttonGroup";
+import {Badge} from "evergreen-ui";
 
 function buildContents(items, headers, headerMapping) {
     for (let header of headers) {
@@ -19,6 +20,28 @@ function buildContents(items, headers, headerMapping) {
             })
         }
     }
+    buildArticleWithTags(items)
+}
+
+function buildArticleWithTags(items) {
+    items.forEach((item) => {
+        item.article = (
+            <div className={"table-article-cell"}>
+                <div style={{
+                    fontSize: "20px",
+                    fontFamily: "\"SF UI Display\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
+                    lineHeight: "25px",
+                    fontWeight: 500,
+                    margin: "5px 0"
+                }}>
+                    <label>{item.title}</label>
+                </div>
+                <div style={{margin: "5px 0"}}>
+                    {item.tag.split(",").map((tag, index) => <Badge key={index} color="blue" margin={2}>{tag}</Badge>)}
+                </div>
+            </div>
+        )
+    })
 }
 
 export function Content(props) {
@@ -41,6 +64,7 @@ export function Content(props) {
                 setPageCount(data.count);
                 buildContents(data["articles"], props.headers, props.headerMapping);
                 setContents(data["articles"]);
+                console.log(data["articles"]);
             }
         } catch (e) {
             // ignored
@@ -80,6 +104,7 @@ export function Content(props) {
                 isSelectable={true}
                 rowHeight={60}
                 rowOnSelect={props.rowOnSelect}
+                rowClass={"content-table-row"}
             />
         </div>
     )

@@ -100,7 +100,6 @@ textarea, select, input, button { outline: none; }
     padding-top: 90px;
 }
 
-
 .header-pages > a {
     margin: 11px 25px 0 0;
     font-size: 25px;
@@ -174,6 +173,15 @@ textarea, select, input, button { outline: none; }
     border-radius: 4px;
     border: 1px solid #EDF0F2;
     box-shadow: 0 0 5px 0 #888888;
+}
+
+.content-table-row {
+    min-height: 60px;
+    height: auto !important;
+}
+
+.table-article-cell {
+    margin: 10px 0;
 }
 
 .table-function-row {
