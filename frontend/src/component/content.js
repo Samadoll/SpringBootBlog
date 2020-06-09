@@ -51,7 +51,7 @@ export function Content(props) {
     const [pageCount, setPageCount] = useState(0);
     const [page, setPage] = useState(1);
     const pagination = <Pagination pagination={{changePage: changePage, page: page, pageCount: pageCount}} className={"table-pagination"}/>
-    const search = <Search searchParam={["title", "tag", "author"]} className={"table-search"} searchFunction={handleSearch}/>
+    const search = <Search className={"table-search"} searchFunction={handleSearch}/>
 
     const buttonGroup = <ButtonGroup buttonGroup={props.buttonGroup} groupClass={"table-function-button-group"} buttonClass={"table-function-button"}/>
 
@@ -93,8 +93,8 @@ export function Content(props) {
             })
     }
 
-    function handleSearch(searchParam, searchString) {
-        alert(searchParam + ":" + searchString);
+    function handleSearch(searchString) {
+        alert(searchString);
     }
 
     return (

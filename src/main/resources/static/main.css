@@ -300,4 +300,32 @@ textarea, select, input, button { outline: none; }
     display: inline-block;
     position: relative;
     top: calc((100% - 30px) / 2);
+    font-family: "SF UI Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 15px;
+}
+
+.table-search > input {
+    vertical-align: top;
+    border-radius: 2px 0 0 2px;
+    margin-right: 0;
+    font-family: "arial", serif;
+    font-size: 120%;
+    color: #454545;
+    height: 28px;
+    border: 1px solid #cccccc !important;
+    padding: 0 4px 0 4px;
+
+}
+
+.table-search > button {
+    border-left: 0;
+    border-right: 1px solid #cccccc;
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+    margin: 0;
+    padding: 3px;
+    height: 30px;
+    width: 40px;
+    border-radius: 0 2px 2px 0;
+    background-color: #F7FAFC;
 }
