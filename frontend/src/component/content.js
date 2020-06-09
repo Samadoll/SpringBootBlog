@@ -3,6 +3,8 @@ import Axios from "axios";
 import {Table} from "./table";
 import {ButtonGroup} from "./buttonGroup";
 import {Badge} from "evergreen-ui";
+import {Pagination} from "./pagination";
+import {Search} from "./search";
 
 function buildContents(items, headers, headerMapping) {
     for (let header of headers) {
@@ -48,11 +50,10 @@ export function Content(props) {
     const [contents, setContents] = useState([]);
     const [pageCount, setPageCount] = useState(0);
     const [page, setPage] = useState(1);
-    const pagination = {
-        changePage: changePage,
-        page: page,
-        pageCount: pageCount
-    }
+    const pagination = <Pagination pagination={{changePage: changePage, page: page, pageCount: pageCount}} className={"table-pagination"}/>
+    const search = <Search searchParam={["title", "tag", "author"]} className={"table-search"} searchFunction={handleSearch}/>
+
+    const buttonGroup = <ButtonGroup buttonGroup={props.buttonGroup} groupClass={"table-function-button-group"} buttonClass={"table-function-button"}/>
 
     async function fetchContents() {
         try {
@@ -92,11 +93,16 @@ export function Content(props) {
             })
     }
 
+    function handleSearch(searchParam, searchString) {
+        alert(searchParam + ":" + searchString);
+    }
+
     return (
         <div className="table-content">
             <Table
-                buttonGroup={props.buttonGroup}
+                buttonGroup={buttonGroup}
                 pagination={pagination}
+                searchFunction={search}
                 itemIdName={"cid"}
                 headers={props.headers}
                 headerMapping={props.headerMapping}

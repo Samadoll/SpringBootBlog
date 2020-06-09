@@ -186,6 +186,7 @@ textarea, select, input, button { outline: none; }
 
 .table-function-row {
     width: 100%;
+    text-align: center;
 }
 
 .table-pagination {
@@ -291,4 +292,12 @@ textarea, select, input, button { outline: none; }
     border: 1px solid #EDF0F2;
     box-shadow: 0 0 5px 0 #888888;
     background-color: white;
+}
+
+.table-search {
+    height: 30px;
+    text-align: center;
+    display: inline-block;
+    position: relative;
+    top: calc((100% - 30px) / 2);
 }

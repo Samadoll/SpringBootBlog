@@ -1,7 +1,5 @@
 import React from "react";
 import { Table as EvergreenTable } from "evergreen-ui"
-import { Pagination } from "./pagination"
-import { ButtonGroup } from "./buttonGroup";
 
 function TableCell(props) {
     const properties = {
@@ -14,7 +12,7 @@ function TableCell(props) {
         properties.flexShrink = 0;
         properties.flexGrow = 0;
     }
-    if (props.isHeaderCell && (type === "buttons" || type === "custom")) type = "text";
+    if (props.isHeaderCell) type = "text";
 
     let element;
     switch (type) {
@@ -44,16 +42,6 @@ function Cell(props) {
     }
 }
 
-function FunctionRow(props) {
-    return (
-        <div className="table-function-row">
-            {props.buttonGroup === undefined ? null : <ButtonGroup {...props} groupClass={"table-function-button-group"} buttonClass={"table-function-button"}/>}
-            {props.searchFunction === undefined ? null : <div>Search</div>}
-            {props.pagination === undefined ? null : <Pagination {...props} className={"table-pagination"}/>}
-        </div>
-    )
-}
-
 export function Table(props) {
     return (
         <EvergreenTable >
@@ -61,11 +49,11 @@ export function Table(props) {
                 props.pagination !== undefined || props.searchFunction !== undefined || props.buttonGroup !== undefined
                     ? (
                         <EvergreenTable.Row >
-                            <FunctionRow
-                                pagination={props.pagination}
-                                searchFunction={props.searchFunction}
-                                buttonGroup={props.buttonGroup}
-                            />
+                            <div className="table-function-row">
+                                {props.buttonGroup ?? null}
+                                {props.searchFunction ?? null}
+                                {props.pagination ?? null}
+                            </div>
                         </EvergreenTable.Row>
                     )
                     : null
