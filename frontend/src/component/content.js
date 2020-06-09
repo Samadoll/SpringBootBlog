@@ -58,15 +58,12 @@ export function Content(props) {
 
     async function fetchContents() {
         try {
-            const url = props.requestUrl;
+            const url = props.requestUrl + (searchString === "" ? "" : `?searchString=${searchString}`);
             const res = await Axios.get(url);
             const status = res.data.status;
             if (status === 200) {
                 const data = res.data.data;
-                setPageCount(data.count);
-                setPage(data.page);
-                buildContents(data["articles"], props.headers, props.headerMapping);
-                setContents(data["articles"]);
+                handleResponse(data, data.page);
             }
         } catch (e) {
             // ignored
@@ -85,10 +82,7 @@ export function Content(props) {
                 const status = res.data.status;
                 if (status === 200) {
                     const data = res.data.data;
-                    setPage(pageNum);
-                    setPageCount(data.count);
-                    buildContents(data["articles"], props.headers, props.headerMapping);
-                    setContents(data["articles"]);
+                    handleResponse(data, pageNum);
                 }
             })
     }
@@ -101,12 +95,16 @@ export function Content(props) {
                 const status = res.data.status;
                 if (status === 200) {
                     const data = res.data.data;
-                    setPage(1);
-                    setPageCount(data.count);
-                    buildContents(data["articles"], props.headers, props.headerMapping);
-                    setContents(data["articles"]);
+                    handleResponse(data, 1);
                 }
             })
+    }
+
+    function handleResponse(data, page) {
+        setPage(page);
+        setPageCount(data.count);
+        buildContents(data["articles"], props.headers, props.headerMapping);
+        setContents(data["articles"]);
     }
 
     return (
