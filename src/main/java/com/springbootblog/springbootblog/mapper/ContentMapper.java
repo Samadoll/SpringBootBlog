@@ -46,6 +46,16 @@ public interface ContentMapper {
             "ORDER BY `C`.`create_time` DESC")
     List<Map<String, Object>> findContentsWithTags();
 
+    @Select("SELECT `C`.`cid`, `C`.`title`, `C`.`content`,  `U`.`username`, `C`.`create_time`, GROUP_CONCAT(`T`.`name` SEPARATOR ',') AS `tag` " +
+            "FROM `content` `C` " +
+            "LEFT JOIN `user` `U` ON `C`.`author_id` = `U`.`uid` " +
+            "LEFT JOIN `relationships` `R` ON `C`.`cid` = `R`.`cid` " +
+            "LEFT JOIN `tags` `T` ON `R`.`tid` = `T`.`tid` " +
+            "WHERE `T`.`name` LIKE #{searchString} OR `C`.`title` LIKE #{searchString} OR `U`.`username` LIKE #{searchString} " +
+            "GROUP BY `C`.`cid`, `C`.`title`, `C`.`content`,  `U`.`username`, `C`.`create_time` " +
+            "ORDER BY `C`.`create_time` DESC")
+    List<Map<String, Object>> findContentsWithTagsWithSearch(@Param("searchString") String searchString);
+
     @Select("SELECT `tags`.`tid`, `tags`.`name`, `content`.`cid`, `content`.`title`, `content`.`content`, `content`.`author_id`, `content`.`create_time` " +
             "FROM tags LEFT JOIN relationships ON tags.tid = relationships.tid " +
             "LEFT JOIN content ON relationships.cid = content.cid WHERE tags.`name` = #{tag} " +
@@ -68,4 +78,14 @@ public interface ContentMapper {
             "GROUP BY `C`.`cid`, `C`.`title`, `C`.`content`,  `U`.`username`, `C`.`create_time` " +
             "ORDER BY `C`.`create_time` DESC")
     List<Map<String, Object>> findContentsWithTagsByAuthorId(@Param("authorId") int authorId);
+
+    @Select("SELECT `C`.`cid`, `C`.`title`, `C`.`content`,  `U`.`username`, `C`.`create_time`, GROUP_CONCAT(`T`.`name` SEPARATOR ',') AS `tag` " +
+            "FROM `content` `C` " +
+            "LEFT JOIN `user` `U` ON `C`.`author_id` = `U`.`uid` " +
+            "LEFT JOIN `relationships` `R` ON `C`.`cid` = `R`.`cid` " +
+            "LEFT JOIN `tags` `T` ON `R`.`tid` = `T`.`tid` " +
+            "WHERE `C`.`author_id` = #{authorId} AND (`T`.`name` LIKE #{searchString} OR `C`.`title` LIKE #{searchString} OR `U`.`username` LIKE #{searchString}) " +
+            "GROUP BY `C`.`cid`, `C`.`title`, `C`.`content`,  `U`.`username`, `C`.`create_time` " +
+            "ORDER BY `C`.`create_time` DESC")
+    List<Map<String, Object>> findContentsWithTagsByAuthorIdWithSearch(@Param("authorId") int authorId, @Param("searchString") String searchString);
 }

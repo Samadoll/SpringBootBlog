@@ -50,9 +50,10 @@ export function Content(props) {
     const [contents, setContents] = useState([]);
     const [pageCount, setPageCount] = useState(0);
     const [page, setPage] = useState(1);
+    const [searchString, setSearchString] = useState("");
+
     const pagination = <Pagination pagination={{changePage: changePage, page: page, pageCount: pageCount}} className={"table-pagination"}/>
     const search = <Search className={"table-search"} searchFunction={handleSearch}/>
-
     const buttonGroup = <ButtonGroup buttonGroup={props.buttonGroup} groupClass={"table-function-button-group"} buttonClass={"table-function-button"}/>
 
     async function fetchContents() {
@@ -63,9 +64,9 @@ export function Content(props) {
             if (status === 200) {
                 const data = res.data.data;
                 setPageCount(data.count);
+                setPage(data.page);
                 buildContents(data["articles"], props.headers, props.headerMapping);
                 setContents(data["articles"]);
-                console.log(data["articles"]);
             }
         } catch (e) {
             // ignored
@@ -78,15 +79,14 @@ export function Content(props) {
 
     function changePage(pageNum) {
         if (page === pageNum) return;
-        const url = props.requestUrl + `?page=${pageNum}`;
-        const query = new URLSearchParams();
-        query.append("page", pageNum);
+        const url = props.requestUrl + `?page=${pageNum}` + (searchString === "" ? "" : `&searchString=${searchString}`);
         Axios.get(url)
             .then((res) => {
                 const status = res.data.status;
                 if (status === 200) {
                     const data = res.data.data;
                     setPage(pageNum);
+                    setPageCount(data.count);
                     buildContents(data["articles"], props.headers, props.headerMapping);
                     setContents(data["articles"]);
                 }
@@ -94,7 +94,19 @@ export function Content(props) {
     }
 
     function handleSearch(searchString) {
-        alert(searchString);
+        setSearchString(searchString);
+        const url = props.requestUrl + (searchString === "" ? "" : `?searchString=${searchString}`);
+        Axios.get(url)
+            .then((res) => {
+                const status = res.data.status;
+                if (status === 200) {
+                    const data = res.data.data;
+                    setPage(1);
+                    setPageCount(data.count);
+                    buildContents(data["articles"], props.headers, props.headerMapping);
+                    setContents(data["articles"]);
+                }
+            })
     }
 
     return (

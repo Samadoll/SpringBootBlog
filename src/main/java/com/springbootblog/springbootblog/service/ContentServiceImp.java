@@ -62,8 +62,8 @@ public class ContentServiceImp implements ContentService {
     }
 
     @Override
-    public List<Map<String, Object>> getContents() {
-        return contentMapper.findContentsWithTags();
+    public List<Map<String, Object>> getContents(String searchString) {
+        return !searchString.isEmpty() ? contentMapper.findContentsWithTagsWithSearch("%" + searchString + "%") : contentMapper.findContentsWithTags();
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ContentServiceImp implements ContentService {
     }
 
     @Override
-    public List<Map<String, Object>> getContentsByAuthorId(int authorId) {
-        return contentMapper.findContentsWithTagsByAuthorId(authorId);
+    public List<Map<String, Object>> getContentsByAuthorId(int authorId, String searchString) {
+        return !searchString.isEmpty() ? contentMapper.findContentsWithTagsByAuthorIdWithSearch(authorId, "%" + searchString + "%") : contentMapper.findContentsWithTagsByAuthorId(authorId);
     }
 }

@@ -112,26 +112,22 @@ public class ContentController {
     @ApiOperation("Get contents of given user")
     @GetMapping("/myContents")
     public ResponseEntity getUserContents(@RequestParam(required = false, defaultValue = "1", value = "page") int page,
-                                          @RequestParam(required = false, defaultValue = PAGE_SIZE, value = "pageSize") int pageSize) {
+                                          @RequestParam(required = false, defaultValue = PAGE_SIZE, value = "pageSize") int pageSize,
+                                          @RequestParam(required = false, defaultValue = "", value = "searchString") String search) {
         PageHelper.startPage(page, pageSize);
-        Page<List<Map<String, Object>>> contents = (Page) contentService.getContentsByAuthorId(Util.getCurrentUid());
-        Map<String, Object> data = new HashMap<>(2);
-        data.put("articles", contents);
-        data.put("count", contents.getPages());
-        return new ResponseEntity(HttpStatus.OK.value(), "Successfully Get Contents", data);
+        Page<List<Map<String, Object>>> contents = (Page) contentService.getContentsByAuthorId(Util.getCurrentUid(), search);
+        return handleGetContentsResponse(contents, page);
     }
 
     @ApiOperation(value = "Get contents in the first page")
     @GetMapping("/contents")
-    public ResponseEntity index(@RequestParam(required = false, defaultValue = "1", value = "page") int page,
-                                @RequestParam(required = false, defaultValue = PAGE_SIZE, value = "pageSize") int pageSize) {
+    public ResponseEntity getContents(@RequestParam(required = false, defaultValue = "1", value = "page") int page,
+                                      @RequestParam(required = false, defaultValue = PAGE_SIZE, value = "pageSize") int pageSize,
+                                      @RequestParam(required = false, defaultValue = "", value = "searchString") String search) {
         // Pagination
         PageHelper.startPage(page, pageSize);
-        Page<List<Map<String, Object>>> contents = (Page) contentService.getContents();
-        Map<String, Object> data = new HashMap<>(2);
-        data.put("articles", contents);
-        data.put("count", contents.getPages());
-        return new ResponseEntity(HttpStatus.OK.value(), "Successfully Get Contents", data);
+        Page<List<Map<String, Object>>> contents = (Page) contentService.getContents(search);
+        return handleGetContentsResponse(contents, page);
     }
 
     @ApiOperation("Get contents by tag")
@@ -141,9 +137,14 @@ public class ContentController {
                                @RequestParam(required = false, defaultValue = PAGE_SIZE, value = "pageSize") int pageSize) {
         PageHelper.startPage(page, pageSize);
         Page<List<Map<String, Object>>> contents = (Page) contentService.getContentByTag(tag);
-        Map<String, Object> data = new HashMap<>(2);
+        return handleGetContentsResponse(contents, page);
+    }
+
+    private ResponseEntity handleGetContentsResponse(Page<List<Map<String, Object>>> contents, int page) {
+        Map<String, Object> data = new HashMap<>(3);
         data.put("articles", contents);
         data.put("count", contents.getPages());
+        data.put("page", page);
         return new ResponseEntity(HttpStatus.OK.value(), "Successfully Get Contents", data);
     }
 }
