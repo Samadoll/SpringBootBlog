@@ -85,7 +85,7 @@ public class ContentController {
     @ApiOperation("Get an article by id")
     @GetMapping("/{cid}")
     public ResponseEntity getContent(@PathVariable int cid) {
-        ContentEntity contentEntity = contentService.getContent(cid);
+        Map<String, Object> contentEntity = contentService.getContentWithAuthor(cid);
         Assert.notNull(contentEntity, "Article Not Exist");
         Map<String, Object> data = new HashMap<>(2);
         data.put("article", contentEntity);

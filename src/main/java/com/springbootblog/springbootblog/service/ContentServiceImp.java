@@ -67,6 +67,12 @@ public class ContentServiceImp implements ContentService {
     }
 
     @Override
+    public Map<String, Object> getContentWithAuthor(int cid) {
+        List<Map<String, Object>> content = contentMapper.findContentWithAuthorByContentId(cid);
+        return content.size() > 0 ? content.get(0) : null;
+    }
+
+    @Override
     public List<Map<String, Object>> getContentByTag(String tag) {
         return contentMapper.findContentsByTag(tag);
     }

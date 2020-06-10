@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {Badge, toaster} from "evergreen-ui";
+import {Badge, Dialog, toaster} from "evergreen-ui";
 import {useHistory, useParams} from "react-router";
 import Axios from "axios";
 import {ButtonGroup} from "../component/buttonGroup";
+import {CommentSection} from "../component/commentSection";
 
 function Paragraph(props) {
     let paragraphs = props.content.replace(/(\r)/g, "").split("\n");
@@ -20,6 +21,8 @@ export function ViewContent(props) {
     const [tags, setTags] = useState([]);
     const [contentBody, setContentBody] = useState("");
     const [buttonGroup, setButtonGroup] = useState([]);
+    const [author, setAuthor] = useState("Unknown");
+    const [createTime, setCreateTIme] = useState("");
 
     async function fetchContent(id) {
         if (Number(id) === 0) return;
@@ -37,6 +40,8 @@ export function ViewContent(props) {
                     {name: "Back", fn: () => history.goBack(), enable: true},
                     {name: "Edit", fn: handleEdit, enable: article["authorId"] === props.userInfo.uid, requiredParam: true}
                 ])
+                setAuthor(article.username);
+                setCreateTIme(new Date(article["create_time"]).toDateString())
             } else {
                 toaster.danger(res.data.message);
                 history.goBack();
@@ -67,6 +72,11 @@ export function ViewContent(props) {
                 <div style={{textAlign: "center", fontFamily: "Verdana", fontSize: "30px"}}>
                     <label>{title}</label>
                 </div>
+                <div style={{textAlign: "center", fontFamily: "Verdana", fontSize: "15px", color: "#888888", marginTop: 5}}>
+                    <label>By {author}</label>
+                    <br/>
+                    {createTime === "" ? null : <label>{createTime}</label>}
+                </div>
             </div>
             <div style={{width: "98%", margin: "10px auto", textAlign: "center"}}>
                 {tags.map((tag, index) => <Badge key={index} color="blue" margin={4}>{tag}</Badge>)}
@@ -74,9 +84,7 @@ export function ViewContent(props) {
             <hr style={{borderTop: "1px solid #EDF0F2", margin: "5px 10px"}} />
             <Paragraph content={contentBody} />
             <hr style={{borderTop: "1px solid #EDF0F2"}} />
-            <div className={"comment-section"} >
-                Comment Section
-            </div>
+            <CommentSection contentId={id} isLoggedIn={props.isLoggedIn} />
         </div>
     )
 }
