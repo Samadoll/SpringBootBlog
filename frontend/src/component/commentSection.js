@@ -1,8 +1,29 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Dialog} from "evergreen-ui";
+import Axios from "axios";
 
 export function CommentSection(props) {
     const [showCommentBox, setShowCommentBox] = useState(false);
+    const [comment, setComment] = useState("");
+    const [comments, setComments] = useState([]);
+
+    async function fetchComment() {
+        try {
+            const url = "/api/getComments/" + props.contentId;
+            const res = await Axios.get(url);
+        } catch(err) {
+            // ignored
+        }
+    }
+
+    useEffect(() => {
+        fetchComment();
+    }, [props.contentId])
+
+    function handleSubmitComment() {
+        alert(props.contentId + ":" + comment);
+    }
+
     return (
         <div className={"comment-section"} >
             <Dialog
@@ -10,11 +31,13 @@ export function CommentSection(props) {
                 isShown={showCommentBox}
                 title={"Comment"}
                 onCloseComplete={() => setShowCommentBox(false)}
+                onConfirm={() => handleSubmitComment()}
                 confirmLabel={"Replay"}
             >
                 <div style={{height: "100%"}}>
                     <textarea
                         placeholder={"Leave a comment..."}
+                        onChange={event => setComment(event.target.value)}
                         style={{
                             width: "calc(100% - 12px)",
                             resize: "vertical",
