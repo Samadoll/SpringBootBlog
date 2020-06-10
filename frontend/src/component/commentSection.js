@@ -1,16 +1,22 @@
 import React, {useEffect, useState} from "react";
-import {Dialog} from "evergreen-ui";
+import {Dialog, toaster} from "evergreen-ui";
 import Axios from "axios";
 
 export function CommentSection(props) {
     const [showCommentBox, setShowCommentBox] = useState(false);
     const [comment, setComment] = useState("");
     const [comments, setComments] = useState([]);
+    const [triggerUpdate, setTriggerUpdate] = useState(true);
 
     async function fetchComment() {
         try {
-            const url = "/api/getComments/" + props.contentId;
+            const url = "/api/comment/getComments?contentId=" + props.contentId;
             const res = await Axios.get(url);
+            console.log(res);
+            const status = res.data.status;
+            if (status === 200) {
+                const data = res.data.data;
+            }
         } catch(err) {
             // ignored
         }
@@ -18,10 +24,27 @@ export function CommentSection(props) {
 
     useEffect(() => {
         fetchComment();
-    }, [props.contentId])
+    }, [props.contentId, triggerUpdate])
 
     function handleSubmitComment() {
-        alert(props.contentId + ":" + comment);
+        const url = "/api/comment/create"
+        const query = new FormData();
+        query.append("contentId", props.contentId);
+        query.append("comment", comment);
+        Axios.post(url, query)
+            .then((res) => {
+                const status = res.data.status;
+                if (status === 200) {
+                    setTriggerUpdate(!triggerUpdate);
+                    toaster.success(res.data.message);
+                } else {
+                    toaster.danger(res.data.message);
+                }
+            })
+            .catch((err) => {
+                toaster.danger(err.response.data.message);
+            })
+        setShowCommentBox(false);
     }
 
     return (
@@ -29,13 +52,14 @@ export function CommentSection(props) {
             <Dialog
                 preventBodyScrolling={true}
                 isShown={showCommentBox}
-                title={"Comment"}
+                title={"Comment " + `(${comment.length}/500)`}
                 onCloseComplete={() => setShowCommentBox(false)}
                 onConfirm={() => handleSubmitComment()}
                 confirmLabel={"Replay"}
             >
                 <div style={{height: "100%"}}>
                     <textarea
+                        maxLength={500}
                         placeholder={"Leave a comment..."}
                         onChange={event => setComment(event.target.value)}
                         style={{

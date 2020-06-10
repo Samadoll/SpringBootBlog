@@ -11,8 +11,8 @@ import java.util.*;
 @Repository
 public interface CommentMapper {
 
-    @Insert("INSERT INTO `comment` (`id`, `parent_id`, `content_id`, `author_id`, `comment`, `create_time`) " +
-            "VALUES (#{comment.id}, #{comment.parentId}, #{comment.contentId}, #{comment.authorId}, #{comment.comment}, #{comment.createTime})")
+    @Insert("INSERT INTO `comments` (`parent_id`, `content_id`, `author_id`, `comment`, `create_time`) " +
+            "VALUES (#{comment.parentId}, #{comment.contentId}, #{comment.authorId}, #{comment.comment}, #{comment.createTime})")
     @Options(useGeneratedKeys = true, keyProperty = "comment.id") // AutoIncrement for id
     void createComment(@Param("comment") CommentEntity commentEntity);
 
@@ -24,15 +24,15 @@ public interface CommentMapper {
             @Result(property = "comment", column = "comment"),
             @Result(property = "createTime", column = "create_time", jdbcType = JdbcType.BIGINT)
     })
-    @Select("SELECT * FROM `comment` WHERE id = #{id}")
+    @Select("SELECT * FROM `comments` WHERE id = #{id}")
     CommentEntity findCommentById(@Param("id") int id);
 
-    @Delete("DELETE FROM `comment` WHERE `id` = #{id}")
+    @Delete("DELETE FROM `comments` WHERE `id` = #{id}")
     void deleteComment(@Param("id") int id);
 
-    @Select("SELECT `comment`.`id`, `comment`.`parent_id`, `comment`.`content_id`, `comment`.`comment`, `user`.`username`, `comment`.`create_time` " +
-            "FROM `comment` LEFT JOIN `user` ON `comment`.`author_id` = `user`.`uid` " +
-            "WHERE `comment`.`content_id` = #{cid} " +
-            "ORDER BY `comment`.`create_time` ASC")
+    @Select("SELECT `comments`.`id`, `comments`.`parent_id`, `comments`.`content_id`, `comments`.`comment`, `user`.`username`, `comments`.`create_time` " +
+            "FROM `comments` LEFT JOIN `user` ON `comments`.`author_id` = `user`.`uid` " +
+            "WHERE `comments`.`content_id` = #{cid} " +
+            "ORDER BY `comments`.`create_time` ASC")
     List<Map<String, Object>> getCommentsByContentId(int cid);
 }

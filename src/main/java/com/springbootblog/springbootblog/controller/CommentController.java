@@ -29,12 +29,15 @@ public class CommentController {
     @Autowired
     CommentService commentService;
 
-    @ApiOperation(value = "Create a comment", notes = "Create a commnt and return comment id")
+    @ApiOperation(value = "Create a comment", notes = "Create a comment and return comment id")
     @IsUser
     @PostMapping("/create")
-    public ResponseEntity createComment(@RequestParam String s) {
-        // TODO;
-        return null;
+    public ResponseEntity createComment(@RequestParam(required = false) Integer parentId,
+                                        @RequestParam int contentId,
+                                        @RequestParam @Length(min = 1, max = 500) String comment) {
+        if (comment.length() == 0) return new ResponseEntity(HttpStatus.BAD_REQUEST.value(), "Comment cannot be empty.", null);
+        int commentId = commentService.createComment(parentId, contentId, Util.getCurrentUid(), comment);
+        return new ResponseEntity(HttpStatus.OK.value(), "Comment Created", commentId);
     }
 
     @ApiOperation(value = "Delete a comment")
@@ -42,23 +45,26 @@ public class CommentController {
     @DeleteMapping("/deleteComment/{id}")
     public ResponseEntity deleteComment(@PathVariable int id) {
         CommentEntity commentEntity = commentService.getComment(id);
-        Assert.notNull(commentEntity, "Article Not Exist");
+        Assert.notNull(commentEntity, "Comment Not Exist");
         if (commentEntity.getAuthorId() != Util.getCurrentUid()) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST.value(), "No Access Right", null);
+            return new ResponseEntity(HttpStatus.FORBIDDEN.value(), "No Access Right", null);
         }
         commentService.deleteComment(id);
-        return new ResponseEntity(HttpStatus.OK.value(), "Article Deleted", null);
+        return new ResponseEntity(HttpStatus.OK.value(), "Comment Deleted", null);
     }
 
-    @ApiOperation("Get contents of given user")
+    @ApiOperation("Get comments of given content")
     @GetMapping("/getComments")
-    public ResponseEntity getUserContents(@RequestParam(required = false, defaultValue = "1", value = "page") int page,
-                                          @RequestParam(required = false, defaultValue = PAGE_SIZE, value = "pageSize") int pageSize,
-                                          @RequestParam(required = true, value = "contentId") int contentId) {
+    public ResponseEntity getComments(@RequestParam(required = false, defaultValue = "1", value = "page") int page,
+                                      @RequestParam(required = false, defaultValue = PAGE_SIZE, value = "pageSize") int pageSize,
+                                      @RequestParam(value = "contentId") int contentId) {
         PageHelper.startPage(page, pageSize);
         Page<List<Map<String, Object>>> comments = (Page) commentService.getCommentsByContentId(contentId);
-        // TODO
-        return null;
+        Map<String, Object> data = new HashMap<>(3);
+        data.put("comments", comments);
+        data.put("count", comments.getPages());
+        data.put("page", page);
+        return new ResponseEntity(HttpStatus.OK.value(), "Successfully Get Comments", data);
     }
 
 }
