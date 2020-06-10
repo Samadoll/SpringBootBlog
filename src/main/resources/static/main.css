@@ -321,8 +321,7 @@ textarea, select, input, button { outline: none; }
 
 .table-search > input {
     vertical-align: top;
-    border-radius: 2px 0 0 2px;
-    margin-right: 0;
+    margin: 0;
     font-family: "arial", serif;
     font-size: 120%;
     color: #454545;
@@ -333,16 +332,25 @@ textarea, select, input, button { outline: none; }
 }
 
 .table-search > button {
-    border-left: 0;
-    border-right: 1px solid #cccccc;
     border-top: 1px solid #cccccc;
     border-bottom: 1px solid #cccccc;
     margin: 0;
     padding: 3px;
     height: 30px;
     width: 40px;
-    border-radius: 0 2px 2px 0;
     background-color: #F7FAFC;
+}
+
+.table-search-button-back {
+    border-left: 0;
+    border-right: 1px solid #cccccc;
+    border-radius: 0 2px 2px 0;
+}
+
+.table-search-button-front {
+    border-left: 1px solid #cccccc;
+    border-right: 0;
+    border-radius: 2px 0 0 2px;
 }
 
 .comment-section-header {
