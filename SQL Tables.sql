@@ -58,9 +58,9 @@ CREATE TABLE `user` (
 DROP TABLE IF EXISTS `comments`;
 CREATE TABLE `comments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `parentId` int(11),
-  `contentId` int(11) NOT NULL,
-  `authorId` int(11) NOT NULL,
+  `parent_id` int(11),
+  `content_id` int(11) NOT NULL,
+  `author_id` int(11) NOT NULL,
   `comment` text COLLATE utf8mb4_general_ci NOT NULL,
   `create_time` bigint(13) NOT NULL,
   PRIMARY KEY (`id`),
