@@ -68,7 +68,7 @@ function HeaderButtonGroup(props) {
 export function Header(props) {
     const pages = [
         {name: "Home", href: "#/", loginRequired: false},
-        {name: "My Content", href: "#/myContents", loginRequired: true},
+        {name: "My Contents", href: "#/myContents", loginRequired: true},
         {name: "About", href: "#/", loginRequired: false}
         ];
     return (

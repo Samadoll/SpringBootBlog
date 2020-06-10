@@ -109,6 +109,10 @@ export function Content(props) {
 
     return (
         <div className="table-content">
+            <div className={"content-header"}>
+                <label>{`${props.isMyContent ? "My" : "All"} Contents`}</label>
+            </div>
+            <hr style={{margin: 0, border: "1px solid #EDF0F2"}}/>
             <Table
                 buttonGroup={buttonGroup}
                 pagination={pagination}

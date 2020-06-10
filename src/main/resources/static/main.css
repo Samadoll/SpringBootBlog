@@ -180,6 +180,21 @@ textarea, select, input, button { outline: none; }
     height: auto !important;
 }
 
+.content-header {
+    text-align: center;
+    width: 100%;
+    height: 40px;
+}
+
+.content-header > label {
+    font-family: "SF UI Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 25px;
+    height: 30px;
+    color: #425A70;
+    position: relative;
+    top: calc((100% - 30px) / 2);
+}
+
 .table-article-cell {
     margin: 10px 0;
 }
