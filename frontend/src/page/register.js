@@ -10,11 +10,16 @@ export function Register() {
     const history = useHistory();
 
     function handleRegister() {
+        const regex = new RegExp(/^[a-zA-Z0-9]+$/g);
+        if (!regex.test(username)) {
+            toaster.danger("Invalid Username (Alphanumeric only)");
+            return;
+        }
         if (confirm !== password) {
             toaster.danger("Password Not Match");
             return;
         }
-        const query = new URLSearchParams();
+        const query = new FormData();
         query.append("username", username);
         query.append("password", password);
         Axios.post("/api/register", query)
