@@ -2,9 +2,10 @@ import React, {useEffect, useState} from 'react';
 import Axios from "axios";
 import {Table} from "./table";
 import {ButtonGroup} from "./buttonGroup";
-import {Badge} from "evergreen-ui";
+import {Badge, toaster} from "evergreen-ui";
 import {Pagination} from "./pagination";
 import {Search} from "./search";
+import {useHistory} from "react-router";
 
 function buildContents(items, headers, headerMapping) {
     for (let header of headers) {
@@ -47,6 +48,7 @@ function buildArticleWithTags(items) {
 }
 
 export function Content(props) {
+    const history = useHistory();
     const [contents, setContents] = useState([]);
     const [pageCount, setPageCount] = useState(0);
     const [page, setPage] = useState(1);
@@ -65,8 +67,9 @@ export function Content(props) {
                 const data = res.data.data;
                 handleResponse(data, data.page);
             }
-        } catch (e) {
-            // ignored
+        } catch (err) {
+            toaster.danger(err.response.data.message);
+            history.goBack();
         }
     }
 

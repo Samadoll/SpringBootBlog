@@ -26,7 +26,7 @@ public interface ContentMapper {
     @Select("SELECT * FROM `content` WHERE cid = #{cid}")
     ContentEntity findContentByContentId(@Param("cid") int cid);
 
-    @Select("SELECT `content`.`cid`, `content`.`title`, `content`.`content`,  `user`.`username`, `content`.`create_time` " +
+    @Select("SELECT `content`.`cid`, `content`.`title`, `content`.`content`,  `user`.`username`, `content`.`create_time`, `user`.`uid` AS `authorId` " +
             "FROM `content` LEFT JOIN `user` ON `content`.`author_id` = `user`.`uid` " +
             "WHERE `content`.`cid` = #{cid}")
     List<Map<String, Object>> findContentWithAuthorByContentId(@Param("cid") int cid);

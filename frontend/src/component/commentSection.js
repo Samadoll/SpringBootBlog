@@ -1,7 +1,33 @@
 import React, {useEffect, useState} from "react";
-import {Dialog, toaster} from "evergreen-ui";
+import {Avatar, Dialog, toaster} from "evergreen-ui";
 import Axios from "axios";
 import {Pagination} from "./pagination";
+
+function CommentBlock(props) {
+    const item = props.item;
+    let paragraphs = item.comment.replace(/(\r)/g, "").split("\n");
+    return (
+        <div style={{height: "auto"}}>
+            <hr style={{borderTop: "1px solid #EDF0F2"}} />
+            <div className={"comment-block"}>
+                <div className={"comment-info"}>
+                    <Avatar
+                        name={item.username}
+                        size={50}
+                        marginTop="5px"
+                    />
+                    <br/>
+                    <label>{item.username}</label>
+                </div>
+                <div className={"comment-block-comment"} >
+                    <label>{new Date(item["create_time"]).toLocaleString()}</label>
+                    <hr style={{borderTop: "1px solid #EDF0F2"}} />
+                    {paragraphs.map((el, index) => el === "" ? <br key={index} /> :<p key={index}>{el}</p>)}
+                </div>
+            </div>
+        </div>
+    )
+}
 
 export function CommentSection(props) {
     const [showCommentBox, setShowCommentBox] = useState(false);
@@ -115,18 +141,24 @@ export function CommentSection(props) {
                 </div>
                 <Pagination pagination={{changePage: changePage, page: page, pageCount: pageCount}} className={"table-pagination"}/>
             </div>
-            {/*<hr style={{borderTop: "1px solid #EDF0F2"}} />*/}
             <div className={"comment-section-comments"}>
-                {comments.map((item, index) =>
-                    <div key={index}>
-                        <hr style={{borderTop: "1px solid #EDF0F2"}} />
-                        <label>Author: {item.username}</label>
-                        <br/>
-                        <label>Comment: {item.comment}</label>
-                        <br/>
-                        <label>Create Time: {new Date(item["create_time"]).toDateString()}</label>
-                    </div>
-                )}
+                {
+                    comments.length === 0
+                        ? (
+                            <div>
+                                <hr style={{borderTop: "1px solid #EDF0F2"}} />
+                                <div style={{
+                                    fontSize: 15,
+                                    fontFamily: "Verdana",
+                                    padding: "10px 10px 18px 10px",
+                                    height: 20
+                                }}>
+                                    <label>No Comments</label>
+                                </div>
+                            </div>
+                        )
+                        : comments.map((item, index) => <CommentBlock key={index} item={item} />)
+                }
             </div>
         </div>
     )

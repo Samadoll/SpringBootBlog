@@ -10,6 +10,8 @@ import { EditContent } from "./page/editContent";
 import { ManageContents } from "./page/manageContents";
 import { DisplayContents } from "./page/displayContents";
 import { ViewContent } from "./page/viewContent";
+import { About } from "./page/about";
+import {MyAccount} from "./page/myAccount";
 
 function ProtectedRoute(props) {
     return (
@@ -103,6 +105,11 @@ export function Routes() {
                                         isLoggedIn ? (<ManageContents isMyContent={true} isLoggedIn={isLoggedIn} />) : (<Redirect to="/" />)
                                     }
                                 </Route>
+                                <Route exact path="/myAccount" >
+                                    {
+                                        isLoggedIn ? (<MyAccount isLoggedIn={isLoggedIn} userInfo={userInfo} />) : (<Redirect to="/" />)
+                                    }
+                                </Route>
                                 <Route path="/loginPage">
                                     {
                                         isLoggedIn ? (<Redirect to="/" />) : (<Login login={login} />)
@@ -126,7 +133,7 @@ export function Routes() {
                                 {/*<ProtectedRoute path={"/loginPage"} condition={!isLoggedIn} target={<Login login={login} />} />*/}
                                 {/*<ProtectedRoute path={"/registerPage"} condition={!isLoggedIn} target={<DisplayContents isMyContent={true} isLoggedIn={isLoggedIn} />} />*/}
                                 {/*<ProtectedRoute path={"/editContent/:id"} condition={isLoggedIn} target={<EditContent isLoggedIn={isLoggedIn}/>} />*/}
-                                <Route exact path="/about" component={Content} />
+                                <Route exact path="/about" component={About} />
                             </Switch>
                         )
                 }

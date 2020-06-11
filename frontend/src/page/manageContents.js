@@ -27,7 +27,7 @@ export function ManageContents(props) {
     }
     const buttonGroup = [
         {name: "Create Blog", fn: () => history.push("/editContent/0"), enable: props.isLoggedIn},
-        {name: "Delete Selected", fn: () => alert("TODO"), enable: true, className: "table-function-button-danger"}
+        // {name: "Delete Selected", fn: () => alert("TODO"), enable: true, className: "table-function-button-danger"}
     ]
 
     function handleEdit(el) {

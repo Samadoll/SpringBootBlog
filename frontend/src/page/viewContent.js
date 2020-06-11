@@ -9,7 +9,7 @@ function Paragraph(props) {
     let paragraphs = props.content.replace(/(\r)/g, "").split("\n");
     return (
         <div style={{width: "95%", margin: "auto"}} className={props.className || "readonly-field-textarea"}>
-            {paragraphs.filter((el) => el !== "").map((el, index) => <p key={index}>{el}</p>)}
+            {paragraphs.map((el, index) => el === "" ? <br key={index} /> :<p key={index}>{el}</p>)}
         </div>
     );
 }
@@ -46,8 +46,10 @@ export function ViewContent(props) {
                 toaster.danger(res.data.message);
                 history.goBack();
             }
-        } catch (e) {
+        } catch (err) {
             // ignored
+            toaster.danger(err.response.data.message);
+            history.goBack();
         }
     }
 
@@ -60,7 +62,7 @@ export function ViewContent(props) {
     }
 
     return (
-        <div className={"edit-content"} style={{paddingBottom: 16}}>
+        <div className={"edit-content"} style={{paddingBottom: 0}}>
             <div>
                 <ButtonGroup
                     groupClass={"table-function-button-group"}

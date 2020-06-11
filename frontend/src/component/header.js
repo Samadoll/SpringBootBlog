@@ -21,7 +21,7 @@ function HeaderButtonGroup(props) {
                     content={
                         <Menu>
                             <Menu.Group>
-                                <Menu.Item icon="person" onSelect={() => alert(props.userInfo.uid)}>My Account</Menu.Item>
+                                <Menu.Item icon="person" onSelect={() => history.push("/myAccount")}>My Account</Menu.Item>
                                 <Menu.Item icon="book" onSelect={() => history.push("/manageContents")}>Manage My Contents</Menu.Item>
                             </Menu.Group>
                             <Menu.Divider />
@@ -67,9 +67,9 @@ function HeaderButtonGroup(props) {
 
 export function Header(props) {
     const pages = [
-        {name: "Home", href: "#/", loginRequired: false},
-        {name: "My Contents", href: "#/myContents", loginRequired: true},
-        {name: "About", href: "#/", loginRequired: false}
+            {name: "Home", href: "#/", loginRequired: false},
+            {name: "My Contents", href: "#/myContents", loginRequired: true},
+            {name: "About", href: "#/about", loginRequired: false}
         ];
     return (
         <div id="header" className="sticky-header">
