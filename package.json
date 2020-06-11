@@ -1,6 +1,6 @@
 {
   "name": "spring-boot-blog",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "private": true,
   "description": "A SpringBoot-React blog",
   "repository": {
@@ -30,7 +30,7 @@
   ],
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "webpack --mode production --config ./webpack.prod.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "watch": "webpack --watch -d --output ./target/classes/static/built/bundle.js"
