@@ -9,7 +9,7 @@ export function Login(props) {
     const history = useHistory();
 
     function handleLogin() {
-        const query = new URLSearchParams();
+        const query = new FormData();
         query.append("username", username);
         query.append("password", password);
         Axios.post("/login", query)
@@ -23,7 +23,7 @@ export function Login(props) {
                     Axios.defaults.headers.Authorization = token;
                     props.login({ username: username, uid: uid });
                     history.push("/")
-                    toaster.success(data.message);
+                    toaster.success(`Welcome, ${username}!`);
                 }
             })
             .catch(error => {

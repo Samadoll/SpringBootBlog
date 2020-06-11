@@ -107,7 +107,7 @@ export function Routes() {
                                 </Route>
                                 <Route exact path="/myAccount" >
                                     {
-                                        isLoggedIn ? (<MyAccount isLoggedIn={isLoggedIn} userInfo={userInfo} />) : (<Redirect to="/" />)
+                                        isLoggedIn ? (<MyAccount isLoggedIn={isLoggedIn} userInfo={userInfo} logout={logout} />) : (<Redirect to="/" />)
                                     }
                                 </Route>
                                 <Route path="/loginPage">

@@ -47,7 +47,6 @@ export function ViewContent(props) {
                 history.goBack();
             }
         } catch (err) {
-            // ignored
             toaster.danger(err.response.data.message);
             history.goBack();
         }

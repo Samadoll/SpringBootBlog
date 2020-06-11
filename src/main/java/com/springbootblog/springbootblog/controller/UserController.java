@@ -3,7 +3,6 @@ package com.springbootblog.springbootblog.controller;
 import com.springbootblog.springbootblog.entity.ResponseEntity;
 import com.springbootblog.springbootblog.entity.UserEntity;
 import com.springbootblog.springbootblog.security.IsUser;
-import com.springbootblog.springbootblog.service.ContentService;
 import com.springbootblog.springbootblog.service.UserService;
 import com.springbootblog.springbootblog.util.Util;
 import io.swagger.annotations.ApiOperation;
@@ -23,9 +22,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private ContentService contentService;
 
     @Autowired
     private CacheManager cacheManager;
@@ -50,6 +46,13 @@ public class UserController {
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername(user.getUsername());
         userEntity.setUid(Util.getCurrentUid());
+        return new ResponseEntity(HttpStatus.OK.value(), "OK", userEntity);
+    }
+
+    @ApiOperation("Get User Info")
+    @GetMapping("/getInfo")
+    public ResponseEntity getUserInfo() {
+        UserEntity userEntity = userService.getUserInfo(Util.getCurrentUid());
         return new ResponseEntity(HttpStatus.OK.value(), "OK", userEntity);
     }
 

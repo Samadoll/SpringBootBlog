@@ -37,6 +37,14 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public UserEntity getUserInfo(int uid) {
+        UserEntity userEntity = userMapper.findByUid(uid);
+        Assert.notNull(userEntity, "User Not Exist");
+        userEntity.setPassword("");
+        return userEntity;
+    }
+
+    @Override
     public void updatePassword(int uid, String password) {
         userMapper.updatePassword(uid, new BCryptPasswordEncoder().encode(password));
     }
