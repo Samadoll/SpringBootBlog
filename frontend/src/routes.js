@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {HashRouter, Switch, Route, Redirect} from "react-router-dom";
-import { Content } from "./component/content"
 import { Login } from "./page/login";
 import { Register } from "./page/register";
 import { Header } from "./component/header";
@@ -12,16 +11,6 @@ import { DisplayContents } from "./page/displayContents";
 import { ViewContent } from "./page/viewContent";
 import { About } from "./page/about";
 import {MyAccount} from "./page/myAccount";
-
-function ProtectedRoute(props) {
-    return (
-        <Route exact path={props.path} >
-            {
-                props.condition ? (props.target) : (<Redirect to="/" />)
-            }
-        </Route>
-    )
-}
 
 export function Routes() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -128,11 +117,6 @@ export function Routes() {
                                 <Route exact path="/content/:id" >
                                     <ViewContent isLoggedIn={isLoggedIn} userInfo={userInfo}/>
                                 </Route>
-                                {/*<ProtectedRoute path={"/myContents"} condition={isLoggedIn} target={<DisplayContents isMyContent={true} isLoggedIn={isLoggedIn} />} />*/}
-                                {/*<ProtectedRoute path={"/manageContents"} condition={isLoggedIn} target={<ManageContents isMyContent={true} isLoggedIn={isLoggedIn} />} />*/}
-                                {/*<ProtectedRoute path={"/loginPage"} condition={!isLoggedIn} target={<Login login={login} />} />*/}
-                                {/*<ProtectedRoute path={"/registerPage"} condition={!isLoggedIn} target={<DisplayContents isMyContent={true} isLoggedIn={isLoggedIn} />} />*/}
-                                {/*<ProtectedRoute path={"/editContent/:id"} condition={isLoggedIn} target={<EditContent isLoggedIn={isLoggedIn}/>} />*/}
                                 <Route exact path="/about" component={About} />
                             </Switch>
                         )
