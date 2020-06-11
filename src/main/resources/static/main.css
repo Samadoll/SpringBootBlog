@@ -356,14 +356,16 @@ textarea, select, input, button { outline: none; }
 .comment-section-header {
     height: 30px;
     width: 100%;
+    text-align: center;
 }
 
 .comment-section-header-label {
     font-family: Verdana, serif;
     font-size: 20px;
     height: 30px;
-    float: left;
-    margin-left: 20px;
+    display: inline-block;
+    position: absolute;
+    left: calc(50% - 54px);
 }
 
 .comment-section-header-label > label {
@@ -376,6 +378,6 @@ textarea, select, input, button { outline: none; }
     height: 30px;
     position: relative;
     top: calc((100% - 30px) / 2);
-    float: right;
+    float: left;
     margin: 0 10px 0 10px;
 }

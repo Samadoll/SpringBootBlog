@@ -58,7 +58,7 @@ public class CommentController {
     public ResponseEntity getComments(@RequestParam(required = false, defaultValue = "1", value = "page") int page,
                                       @RequestParam(required = false, defaultValue = PAGE_SIZE, value = "pageSize") int pageSize,
                                       @RequestParam(value = "contentId") int contentId) {
-        PageHelper.startPage(page, pageSize);
+        PageHelper.startPage(page, pageSize, true, true, false);
         Page<List<Map<String, Object>>> comments = (Page) commentService.getCommentsByContentId(contentId);
         Map<String, Object> data = new HashMap<>(3);
         data.put("comments", comments);

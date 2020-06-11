@@ -60,7 +60,7 @@ export function ViewContent(props) {
     }
 
     return (
-        <div className={"edit-content"}>
+        <div className={"edit-content"} style={{paddingBottom: 16}}>
             <div>
                 <ButtonGroup
                     groupClass={"table-function-button-group"}
